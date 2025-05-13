@@ -1,0 +1,355 @@
+Help on module anki.decks in anki:
+
+NAME
+    anki.decks
+
+DESCRIPTION
+    # Copyright: Ankitects Pty Ltd and contributors
+    # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+CLASSES
+    anki._legacy.DeprecatedNamesMixin(builtins.object)
+        DeckManager
+    builtins.object
+        DecksDictProxy
+    
+    class DeckManager(anki._legacy.DeprecatedNamesMixin)
+     |  DeckManager(col: 'anki.collection.Collection') -> 'None'
+     |  
+     |  Method resolution order:
+     |      DeckManager
+     |      anki._legacy.DeprecatedNamesMixin
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, col: 'anki.collection.Collection') -> 'None'
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  active(self) -> 'list[DeckId]'
+     |  
+     |  add_config(self, name: 'str', clone_from: 'DeckConfigDict | None' = None) -> 'DeckConfigDict'
+     |  
+     |  add_config_returning_id(self, name: 'str', clone_from: 'DeckConfigDict | None' = None) -> 'DeckConfigId'
+     |  
+     |  add_deck(self, deck: 'Deck') -> 'OpChangesWithId'
+     |  
+     |  add_deck_legacy(self, deck: 'DeckDict') -> 'OpChangesWithId'
+     |      Add a deck created with new_deck_legacy(). Must have id of 0.
+     |  
+     |  add_normal_deck_with_name(self, name: 'str') -> 'OpChangesWithId'
+     |      If deck exists, return existing id.
+     |  
+     |  all(self) -> 'list[DeckDict]'
+     |      All decks. Expensive; prefer all_names_and_ids()
+     |  
+     |  all_config(self) -> 'list[DeckConfigDict]'
+     |      A list of all deck config.
+     |  
+     |  all_ids(self) -> 'list[str]'
+     |  
+     |  all_names(self, dyn: 'bool' = True, force_default: 'bool' = True) -> 'list[str]'
+     |  
+     |  all_names_and_ids(self, skip_empty_default: 'bool' = False, include_filtered: 'bool' = True) -> 'Sequence[DeckNameId]'
+     |      A sorted sequence of deck names and IDs.
+     |  
+     |  by_name(self, name: 'str') -> 'DeckDict | None'
+     |      Get deck with NAME, ignoring case.
+     |  
+     |  card_count(self, dids: 'DeckId | Iterable[DeckId]', include_subdecks: 'bool') -> 'Any'
+     |  
+     |  child_ids(self, parent_name: 'str') -> 'Iterable[DeckId]'
+     |  
+     |  children(self, did: 'DeckId') -> 'list[tuple[str, DeckId]]'
+     |      All children of did, as (name, id).
+     |  
+     |  cids(self, did: 'DeckId', children: 'bool' = False) -> 'list[anki.cards.CardId]'
+     |  
+     |  collapse(self, did: 'DeckId') -> 'None'
+     |  
+     |  collapse_browser(self, did: 'DeckId') -> 'None'
+     |  
+     |  config_dict_for_deck_id(self, did: 'DeckId') -> 'DeckConfigDict'
+     |  
+     |  count(self) -> 'int'
+     |  
+     |  current(self) -> 'DeckDict'
+     |  
+     |  deck_and_child_ids(self, deck_id: 'DeckId') -> 'list[DeckId]'
+     |  
+     |  deck_and_child_name_ids(self, deck_id: 'DeckId') -> 'Iterable[tuple[str, DeckId]]'
+     |      The deck of did and all its children, as (name, id).
+     |  
+     |  deck_tree(self) -> 'DeckTreeNode'
+     |  
+     |  decks_using_config(self, conf: 'DeckConfigDict') -> 'list[DeckId]'
+     |  
+     |  flush(self) -> 'None'
+     |  
+     |  for_card_ids(self, cids: 'list[anki.cards.CardId]') -> 'list[DeckId]'
+     |  
+     |  get(self, did: 'DeckId | str', default: 'bool' = True) -> 'DeckDict | None'
+     |  
+     |  get_all_legacy(self) -> 'list[DeckDict]'
+     |  
+     |  get_config(self, conf_id: 'DeckConfigId') -> 'DeckConfigDict | None'
+     |  
+     |  get_current_id(self) -> 'DeckId'
+     |      The currently selected deck ID.
+     |  
+     |  get_deck_configs_for_update(self, deck_id: 'DeckId') -> 'DeckConfigsForUpdate'
+     |  
+     |  get_legacy(self, did: 'DeckId') -> 'DeckDict | None'
+     |  
+     |  have(self, id: 'DeckId') -> 'bool'
+     |  
+     |  id(self, name: 'str', create: 'bool' = True, type: 'DeckConfigId' = 0) -> 'DeckId | None'
+     |      Add a deck with NAME. Reuse deck if already exists. Return id as int.
+     |  
+     |  id_for_name(self, name: 'str') -> 'DeckId | None'
+     |  
+     |  is_filtered(self, did: 'DeckId | str') -> 'bool'
+     |  
+     |  name(self, did: 'DeckId', default: 'bool' = False) -> 'str'
+     |  
+     |  name_if_exists(self, did: 'DeckId') -> 'str | None'
+     |  
+     |  name_map(self) -> 'dict[str, DeckDict]'
+     |  
+     |  new_deck(self) -> 'Deck'
+     |      Return a new normal deck. It must be added with .add_deck() after a name assigned.
+     |  
+     |  new_deck_legacy(self, filtered: 'bool') -> 'DeckDict'
+     |  
+     |  new_filtered(self, name: 'str') -> 'DeckId'
+     |      For new code, prefer col.sched.get_or_create_filtered_deck().
+     |  
+     |  parents(self, did: 'DeckId', name_map: 'dict[str, DeckDict] | None' = None) -> 'list[DeckDict]'
+     |      All parents of did.
+     |  
+     |  parents_by_name(self, name: 'str') -> 'list[DeckDict]'
+     |      All existing parents of name
+     |  
+     |  rem(self, did: 'DeckId', **legacy_args: 'bool') -> 'None'
+     |      Remove the deck. If cardsToo, delete any cards inside.
+     |  
+     |  remove(self, dids: 'Sequence[DeckId]') -> 'OpChangesWithCount'
+     |  
+     |  remove_config(self, id: 'DeckConfigId') -> 'None'
+     |      Remove a configuration and update all decks using it.
+     |  
+     |  rename(self, deck: 'DeckDict | DeckId', new_name: 'str') -> 'OpChanges'
+     |      Rename deck prefix to NAME if not exists. Updates children.
+     |  
+     |  reparent(self, deck_ids: 'Sequence[DeckId]', new_parent: 'DeckId') -> 'OpChangesWithCount'
+     |      Rename one or more source decks that were dropped on `new_parent`.
+     |      If new_parent is 0, decks will be placed at the top level.
+     |  
+     |  restore_to_default(self, conf: 'DeckConfigDict') -> 'None'
+     |  
+     |  save(self, deck_or_config: 'DeckDict | DeckConfigDict' = None) -> 'None'
+     |      Can be called with either a deck or a deck configuration.
+     |  
+     |  select(self, did: 'DeckId') -> 'None'
+     |  
+     |  selected = get_current_id(self) -> 'DeckId'
+     |  
+     |  set_collapsed(self, deck_id: 'DeckId', collapsed: 'bool', scope: 'DeckCollapseScope.V') -> 'OpChanges'
+     |  
+     |  set_config_id_for_deck_dict(self, deck: 'DeckDict', id: 'DeckConfigId') -> 'None'
+     |  
+     |  set_current(self, deck: 'DeckId') -> 'OpChanges'
+     |  
+     |  set_deck(self, cids: 'list[anki.cards.CardId]', did: 'DeckId') -> 'None'
+     |  
+     |  update(self, deck: 'DeckDict', preserve_usn: 'bool' = True) -> 'None'
+     |      Add or update an existing deck. Used for syncing and merging.
+     |  
+     |  update_config(self, conf: 'DeckConfigDict', preserve_usn: 'bool' = False) -> 'None'
+     |      preserve_usn is ignored
+     |  
+     |  update_deck_configs(self, input: 'UpdateDeckConfigs') -> 'OpChanges'
+     |  
+     |  update_dict(self, deck: 'DeckDict') -> 'OpChanges'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Class methods defined here:
+     |  
+     |  basename(name: 'str') -> 'str' from builtins.type
+     |  
+     |  find_deck_in_tree(node: 'DeckTreeNode', deck_id: 'DeckId') -> 'DeckTreeNode | None' from builtins.type
+     |  
+     |  immediate_parent(name: 'str') -> 'str | None' from builtins.type
+     |  
+     |  immediate_parent_path(name: 'str') -> 'list[str]' from builtins.type
+     |  
+     |  key(deck: 'DeckDict') -> 'list[str]' from builtins.type
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |  
+     |  path(name: 'str') -> 'list[str]'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __getattr__(self, name: 'str') -> 'Any'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Class methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  register_deprecated_aliases(**kwargs: 'DeprecatedAliasTarget') -> 'None' from builtins.type
+     |      Manually add aliases that are not a simple transform.
+     |      
+     |      Either pass in a method, or a tuple of (variable, "variable"). The
+     |      latter is required because we want to ensure the provided arguments
+     |      are valid symbols, and we can't get a variable's name easily.
+     |  
+     |  register_deprecated_attributes(**kwargs: 'tuple[DeprecatedAliasTarget, DeprecatedAliasTarget | None]') -> 'None' from builtins.type
+     |      Manually add deprecated attributes without exact substitutes.
+     |      
+     |      Pass a tuple of (alias, replacement), where alias is the attribute's new
+     |      name (by convention: snakecase, prepended with '_legacy_'), and
+     |      replacement is any callable to be used instead in new code or None.
+     |      Also note the docstring of `register_deprecated_aliases`.
+     |      
+     |      E.g. given `def oldFunc(args): return new_func(additionalLogic(args))`,
+     |      rename `oldFunc` to `_legacy_old_func` and call
+     |      `register_deprecated_attributes(oldFunc=(_legacy_old_func, new_func))`.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __annotations__ = {'_deprecated_aliases': 'dict[str, str]', '_deprecat...
+    
+    class DecksDictProxy(builtins.object)
+     |  DecksDictProxy(col: 'anki.collection.Collection')
+     |  
+     |  Methods defined here:
+     |  
+     |  __contains__(self, item: 'Any') -> 'bool'
+     |  
+     |  __getitem__(self, item: 'Any') -> 'Any'
+     |  
+     |  __init__(self, col: 'anki.collection.Collection')
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __len__(self) -> 'int'
+     |  
+     |  __setitem__(self, key: 'Any', val: 'Any') -> 'None'
+     |  
+     |  items(self) -> 'Any'
+     |  
+     |  keys(self) -> 'Any'
+     |  
+     |  values(self) -> 'Any'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FUNCTIONS
+    __getattr__(name)
+    
+    from_json_bytes = loads(obj, /)
+        Deserialize JSON to Python objects.
+    
+    to_json_bytes = dumps(obj, /, default=None, option=None)
+        Serialize Python objects to JSON.
+
+DATA
+    Any = typing.Any
+        Special type indicating an unconstrained type.
+        
+        - Any is compatible with every type.
+        - Any assumed to have all methods.
+        - All values assumed to be instances of Any.
+        
+        Note that all the above statements are true from the point of view of
+        static type checkers. At runtime, Any should not be used with instance
+        or class checks.
+    
+    BUTTON_FOUR = 4
+    BUTTON_ONE = 1
+    BUTTON_THREE = 3
+    BUTTON_TWO = 2
+    CARD_TYPE_LRN = 1
+    CARD_TYPE_NEW = 0
+    CARD_TYPE_RELEARNING = 3
+    CARD_TYPE_REV = 2
+    COUNT_ANSWERED = 0
+    COUNT_REMAINING = 1
+    DECK_DYN = 1
+    DECK_STD = 0
+    DEFAULT_DECK_CONF_ID = 1
+    DEFAULT_DECK_ID = 1
+    DYN_ADDED = 5
+    DYN_BIGINT = 3
+    DYN_DUE = 6
+    DYN_DUEPRIORITY = 8
+    DYN_LAPSES = 4
+    DYN_MAX_SIZE = 99999
+    DYN_OLDEST = 0
+    DYN_RANDOM = 1
+    DYN_REVADDED = 7
+    DYN_SMALLINT = 2
+    DeckCollapseScope = <google.protobuf.internal.enum_type_wrapper.EnumTy...
+    DeckConfigDict = dict[str, typing.Any]
+    DeckDict = dict[str, typing.Any]
+    HELP_SITE = 'https://docs.ankiweb.net/'
+    Iterable = typing.Iterable
+        A generic version of collections.abc.Iterable.
+    
+    LEECH_SUSPEND = 0
+    LEECH_TAGONLY = 1
+    MEDIA_ADD = 0
+    MEDIA_REM = 1
+    MODEL_CLOZE = 1
+    MODEL_STD = 0
+    NEW_CARDS_DISTRIBUTE = 0
+    NEW_CARDS_DUE = 1
+    NEW_CARDS_FIRST = 2
+    NEW_CARDS_LAST = 1
+    NEW_CARDS_RANDOM = 0
+    QUEUE_TYPE_DAY_LEARN_RELEARN = 3
+    QUEUE_TYPE_LRN = 1
+    QUEUE_TYPE_MANUALLY_BURIED = -3
+    QUEUE_TYPE_NEW = 0
+    QUEUE_TYPE_PREVIEW = 4
+    QUEUE_TYPE_REV = 2
+    QUEUE_TYPE_SIBLING_BURIED = -2
+    QUEUE_TYPE_SUSPENDED = -1
+    REM_CARD = 0
+    REM_DECK = 2
+    REM_NOTE = 1
+    REVLOG_CRAM = 3
+    REVLOG_LRN = 0
+    REVLOG_RELRN = 2
+    REVLOG_RESCHED = 4
+    REVLOG_REV = 1
+    STARTING_FACTOR = 2500
+    STARTING_FACTOR_FRACTION = 2.5
+    Sequence = typing.Sequence
+        A generic version of collections.abc.Sequence.
+    
+    TYPE_CHECKING = False
+    annotations = _Feature((3, 7, 0, 'beta', 1), (3, 10, 0, 'alpha', 0), 1...
+
+FILE
+    /Users/ryanfriberg/opt/anaconda3/lib/python3.9/site-packages/anki/decks.py
+
+

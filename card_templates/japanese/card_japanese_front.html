@@ -1,0 +1,121 @@
+<head>
+    <style>
+        #revealButton {
+            display: none;
+        }
+        #hideButton {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div style="font-size:30px" id="question_div"></div>
+    <div style="font-size:12px" id="info_div">{{Info}}</div>
+
+    <div id="front-kana"></div>
+    
+    <button id="revealButton" onclick="reveal()">Show Context</button>
+    <button id="hideButton" onclick="hide()">Hide Context</button>
+    
+    <br>
+    <br>
+    <div id="tags-container"></div>
+    
+    <br>
+    <div id="context-tags-container"></div>
+    
+    <script>
+        var questionDiv = document.getElementById("question_div")
+        var infoDiv = document.getElementById("info_div")
+        var contextContent = "{{Context}}";
+        var infoContent = "{{Info}}";
+
+        var colors = [
+            "#f44336", "#9C27B0", "#3F51B5", "#03A9F4", "#009688",
+            "#C0CA33", "#FF9800", "#FF5722", "#9E9E9E", "#607D8B", 
+            "#FA7202", "#8A9A5B", '#86C6D3', '#674EA7'
+        ]
+    
+        var context_tags = [
+            "Derogatory", "Slang", "Vulgar", "Colloquial", "Humble", "Polite", 
+            "Sports", "Figurative", "Engineering", "Electricity", "Networking", 
+            "Internet-slang", "Onomatopoea", "Astronomy", "Music", "Chemistry", 
+            "Physics", "Statistics", "Formal", "Computing", "Medicine", "Grammar", 
+            "Botany", "Food", "Cooking", "Psychology", "Honorific", "Law", "Logic", 
+            "Linguistics", "Sensitive", "Counter", "Mathematics", "Familiar", 
+            "Physiology", "Male-term", "Female-term", "Stock market", "Proverb", 
+            "Geology", "Anatomy", "General-term", "Video-Games", "Aviation", 
+            "Telecommunications", "Finance", "Geometry", "Jocular", "Humorous", 
+            "Printing", "onomatopoea", "四字熟語", "Euphemistic", "Mahjong",
+            "Children's-language","Business", "Sumo", "Dated", "Historical",
+            "Archaic", "Archaism", "Kabuki", "Christianity", "Bhuddism", "Go", 
+            "Obsolete", "Baseball", "Poetic", "Rare", "Horse-racing", "Brazilian", 
+            "Martial-arts", "Billiards-slang", "Shogi", "Hanafuda", "Seldom", 
+            "Shinto", "Osaka-Dialect", "Kansai-Dialect", "Kyuushuu-Dialect", 
+            "Hokkaido-Dialect", "Touhoku-Dialect", "Tsugaru-Dialect", "Abbreviation",
+            "Judo"
+        ]
+    
+    
+        var tagContent = "{{Tags}}";
+        var main = false;
+    
+        if (tagContent.search(" ") >= 1) {
+            var tags = tagContent.split(" ");
+        } else {
+            var tags = [tagContent];
+        }
+    
+        for (var i in tags) {
+            var newDiv = document.createElement("div");
+            newDiv.id = "tag";
+            newDiv.innerHTML = tags[i];
+            newDiv.style.display = "inline-block";
+                
+            // front-facing tags
+            if (tags[i] == "main"){
+                newDiv.style.backgroundColor = colors[13];
+                newDiv.style.border = "10px solid" + colors[13];
+                document.getElementById("tags-container").appendChild(newDiv);
+                main = true;
+            
+            } else if (tags[i] == "variant"){
+                newDiv.style.backgroundColor = colors[12];
+                newDiv.style.border = "10px solid" + colors[12];
+                document.getElementById("tags-container").appendChild(newDiv);
+            
+            } else if (context_tags.includes(tags[i])) {
+                newDiv.style.backgroundColor = colors[11];
+                newDiv.style.border = "1px solid" + colors[11];
+                document.getElementById("context-tags-container").appendChild(newDiv);        
+            } else if (tags[i] == "front-kana"){
+                var kanaDiv = document.createElement("div");
+                kanaDiv.id = "kana";
+                kanaDiv.innerHTML = "{{Middle}}";
+                document.getElementById("front-kana").appendChild(kanaDiv);
+            }
+        }
+
+        if (main){
+            questionDiv.innerHTML = "{{Back}}";
+            
+            // if ((contextContent.trim() !== "") || (infoContent.trim() !== "")) {
+            if ((contextContent.trim() !== "")) { 
+                revealButton.style.display = "inline";
+            }
+        } else {
+            questionDiv.innerHTML = "{{Context}}{{Back}}";
+        }
+        
+        function reveal() {
+            questionDiv.innerHTML = "{{Context}}{{Back}}";
+            revealButton.style.display = "none";
+            hideButton.style.display = "inline";
+        }
+        function hide() {
+            questionDiv.innerHTML = "{{Back}}";
+            hideButton.style.display = "none";
+            revealButton.style.display = "inline";
+        }
+    </script>
+</body>

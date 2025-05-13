@@ -1,0 +1,190 @@
+Help on module anki.cards in anki:
+
+NAME
+    anki.cards
+
+DESCRIPTION
+    # Copyright: Ankitects Pty Ltd and contributors
+    # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+CLASSES
+    anki._legacy.DeprecatedNamesMixin(builtins.object)
+        Card
+    
+    class Card(anki._legacy.DeprecatedNamesMixin)
+     |  Card(col: 'anki.collection.Collection', id: 'CardId | None' = None, backend_card: 'BackendCard | None' = None) -> 'None'
+     |  
+     |  Method resolution order:
+     |      Card
+     |      anki._legacy.DeprecatedNamesMixin
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, col: 'anki.collection.Collection', id: 'CardId | None' = None, backend_card: 'BackendCard | None' = None) -> 'None'
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  answer(self) -> 'str'
+     |  
+     |  answer_av_tags(self) -> 'list[AVTag]'
+     |  
+     |  autoplay(self) -> 'bool'
+     |  
+     |  css(self) -> 'str'
+     |  
+     |  current_deck_id(self) -> 'anki.decks.DeckId'
+     |  
+     |  description(self) -> 'str'
+     |  
+     |  flush(self) -> 'None'
+     |  
+     |  is_empty(self) -> 'bool'
+     |  
+     |  load(self) -> 'None'
+     |  
+     |  note(self, reload: 'bool' = False) -> 'Note'
+     |  
+     |  note_type(self) -> 'NotetypeDict'
+     |  
+     |  question(self, reload: 'bool' = False, browser: 'bool' = False) -> 'str'
+     |  
+     |  question_av_tags(self) -> 'list[AVTag]'
+     |  
+     |  render_output(self, reload: 'bool' = False, browser: 'bool' = False) -> 'anki.template.TemplateRenderOutput'
+     |  
+     |  replay_question_audio_on_answer_side(self) -> 'bool'
+     |  
+     |  set_render_output(self, output: 'anki.template.TemplateRenderOutput') -> 'None'
+     |  
+     |  set_user_flag(self, flag: 'int') -> 'None'
+     |  
+     |  should_show_timer(self) -> 'bool'
+     |  
+     |  start_timer(self) -> 'None'
+     |  
+     |  template(self) -> 'TemplateDict'
+     |  
+     |  time_limit(self) -> 'int'
+     |      Time limit for answering in milliseconds.
+     |  
+     |  time_taken(self, capped: 'bool' = True) -> 'int'
+     |      Time taken since card timer started, in integer MS.
+     |      If `capped` is true, returned time is limited to deck preset setting.
+     |  
+     |  user_flag(self) -> 'int'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __annotations__ = {'_note': 'Note | None', 'desired_retention': 'float...
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __getattr__(self, name: 'str') -> 'Any'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Class methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  register_deprecated_aliases(**kwargs: 'DeprecatedAliasTarget') -> 'None' from builtins.type
+     |      Manually add aliases that are not a simple transform.
+     |      
+     |      Either pass in a method, or a tuple of (variable, "variable"). The
+     |      latter is required because we want to ensure the provided arguments
+     |      are valid symbols, and we can't get a variable's name easily.
+     |  
+     |  register_deprecated_attributes(**kwargs: 'tuple[DeprecatedAliasTarget, DeprecatedAliasTarget | None]') -> 'None' from builtins.type
+     |      Manually add deprecated attributes without exact substitutes.
+     |      
+     |      Pass a tuple of (alias, replacement), where alias is the attribute's new
+     |      name (by convention: snakecase, prepended with '_legacy_'), and
+     |      replacement is any callable to be used instead in new code or None.
+     |      Also note the docstring of `register_deprecated_aliases`.
+     |      
+     |      E.g. given `def oldFunc(args): return new_func(additionalLogic(args))`,
+     |      rename `oldFunc` to `_legacy_old_func` and call
+     |      `register_deprecated_attributes(oldFunc=(_legacy_old_func, new_func))`.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+DATA
+    AVTag = typing.Union[anki.sound.SoundOrVideoTag, anki.sound.TTSTag]
+    Any = typing.Any
+        Special type indicating an unconstrained type.
+        
+        - Any is compatible with every type.
+        - Any assumed to have all methods.
+        - All values assumed to be instances of Any.
+        
+        Note that all the above statements are true from the point of view of
+        static type checkers. At runtime, Any should not be used with instance
+        or class checks.
+    
+    BUTTON_FOUR = 4
+    BUTTON_ONE = 1
+    BUTTON_THREE = 3
+    BUTTON_TWO = 2
+    CARD_TYPE_LRN = 1
+    CARD_TYPE_NEW = 0
+    CARD_TYPE_RELEARNING = 3
+    CARD_TYPE_REV = 2
+    COUNT_ANSWERED = 0
+    COUNT_REMAINING = 1
+    DECK_DYN = 1
+    DECK_STD = 0
+    DYN_ADDED = 5
+    DYN_BIGINT = 3
+    DYN_DUE = 6
+    DYN_DUEPRIORITY = 8
+    DYN_LAPSES = 4
+    DYN_MAX_SIZE = 99999
+    DYN_OLDEST = 0
+    DYN_RANDOM = 1
+    DYN_REVADDED = 7
+    DYN_SMALLINT = 2
+    HELP_SITE = 'https://docs.ankiweb.net/'
+    LEECH_SUSPEND = 0
+    LEECH_TAGONLY = 1
+    MEDIA_ADD = 0
+    MEDIA_REM = 1
+    MODEL_CLOZE = 1
+    MODEL_STD = 0
+    NEW_CARDS_DISTRIBUTE = 0
+    NEW_CARDS_DUE = 1
+    NEW_CARDS_FIRST = 2
+    NEW_CARDS_LAST = 1
+    NEW_CARDS_RANDOM = 0
+    NotetypeDict = dict[str, typing.Any]
+    QUEUE_TYPE_DAY_LEARN_RELEARN = 3
+    QUEUE_TYPE_LRN = 1
+    QUEUE_TYPE_MANUALLY_BURIED = -3
+    QUEUE_TYPE_NEW = 0
+    QUEUE_TYPE_PREVIEW = 4
+    QUEUE_TYPE_REV = 2
+    QUEUE_TYPE_SIBLING_BURIED = -2
+    QUEUE_TYPE_SUSPENDED = -1
+    REM_CARD = 0
+    REM_DECK = 2
+    REM_NOTE = 1
+    REVLOG_CRAM = 3
+    REVLOG_LRN = 0
+    REVLOG_RELRN = 2
+    REVLOG_RESCHED = 4
+    REVLOG_REV = 1
+    STARTING_FACTOR = 2500
+    STARTING_FACTOR_FRACTION = 2.5
+    TYPE_CHECKING = False
+    TemplateDict = dict[str, typing.Union[str, int, NoneType]]
+    annotations = _Feature((3, 7, 0, 'beta', 1), (3, 10, 0, 'alpha', 0), 1...
+
+FILE
+    /Users/ryanfriberg/opt/anaconda3/lib/python3.9/site-packages/anki/cards.py
+
+

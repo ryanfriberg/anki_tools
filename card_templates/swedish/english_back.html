@@ -1,0 +1,42 @@
+{{English}}<br>
+{{#English Alternatives}}<br /><span class="alts">{{English Alternatives}}</span>{{/English Alternatives}}
+{{#Part of Speech}}<br /><span class="attrs">({{Part of Speech}})</span>{{/Part of Speech}}
+
+<br><br>
+
+{{type:Swedish}}
+
+<br><br>
+<div id="tags-container"></div>
+
+<script>
+    var colors = [
+        "#f44336", "#9C27B0", "#3F51B5", "#03A9F4", "#009688",
+        "#C0CA33", "#FF9800", "#FF5722", "#9E9E9E", "#607D8B", 
+        "#FA7202", "#8A9A5B", '#86C6D3', '#674EA7'
+    ]
+
+    var tagContent = "{{Tags}}";
+    if (tagContent.search(" ") >= 1) {
+        var tags = tagContent.split(" ");
+    } else {
+        var tags = [tagContent];
+    }
+
+    for (var i in tags) {
+        var newDiv = document.createElement("div");
+        newDiv.id = "tag";
+        newDiv.innerHTML = tags[i];
+        newDiv.style.display = "inline-block";
+
+        if (tags[i] == "leech"){
+            newDiv.style.backgroundColor = colors[10]; 
+            newDiv.style.border = "1px solid" + colors[10];
+            document.getElementById("tags-container").appendChild(newDiv);
+        
+        } else {
+            continue;
+        }
+    }
+
+</script>

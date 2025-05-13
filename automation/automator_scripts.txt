@@ -1,0 +1,32 @@
+NOTE: these are modified to use dev package paths
+
+Sentence_to_CSV.workflow:
+
+--------------------------------------------------------------------------------
+
+on run {input, parameters}
+
+	set csvFile to "/Users/ryanfriberg/dev/anki_tools/automation/sentences.csv"
+    set clipboardText to the clipboard
+    do shell script "echo " & quoted form of clipboardText & " >> " & quoted form of csvFile
+    
+    return input
+end run
+
+--------------------------------------------------------------------------------
+
+
+Dictionary_Automation.workflow
+
+--------------------------------------------------------------------------------
+
+on run {input, parameters}
+	set pythonPath to "/Users/ryanfriberg/opt/anaconda3/bin/python"
+	set pythonScriptPath to "/Users/ryanfriberg/dev/anki_tools/automation/query_apple_dictionary.py"
+	set clipboardText to the clipboard
+	set shellCommand to pythonPath & " " & quoted form of pythonScriptPath & " " & quoted form of clipboardText
+	do shell script shellCommand
+	
+	return input
+
+--------------------------------------------------------------------------------

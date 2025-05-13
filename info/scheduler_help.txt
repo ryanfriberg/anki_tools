@@ -1,0 +1,336 @@
+Help on module anki.scheduler.v3 in anki.scheduler:
+
+NAME
+    anki.scheduler.v3 - The V3/2021 scheduler.
+
+DESCRIPTION
+    https://faqs.ankiweb.net/the-2021-scheduler.html
+    
+    It uses the same DB schema as the V2 scheduler, and 'schedVer' remains
+    as '2' internally.
+
+CLASSES
+    anki.scheduler.legacy.SchedulerBaseWithLegacy(anki.scheduler.base.SchedulerBase)
+        Scheduler
+    
+    class Scheduler(anki.scheduler.legacy.SchedulerBaseWithLegacy)
+     |  Scheduler(col: 'anki.collection.Collection') -> 'None'
+     |  
+     |  Method resolution order:
+     |      Scheduler
+     |      anki.scheduler.legacy.SchedulerBaseWithLegacy
+     |      anki.scheduler.base.SchedulerBase
+     |      anki._legacy.DeprecatedNamesMixin
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  answerCard(self, card: 'Card', ease: 'Literal[1, 2, 3, 4]') -> 'OpChanges'
+     |  
+     |  answer_card(self, input: 'CardAnswer') -> 'OpChanges'
+     |      Update card to provided state, and remove it from queue.
+     |  
+     |  build_answer(self, *, card: 'Card', states: 'SchedulingStates', rating: 'CardAnswer.Rating.V') -> 'CardAnswer'
+     |      Build input for answer_card().
+     |  
+     |  counts(self, card: 'Optional[Card]' = None) -> 'tuple[int, int, int]'
+     |  
+     |  describe_next_states(self, next_states: 'SchedulingStates') -> 'Sequence[str]'
+     |      Labels for each of the answer buttons.
+     |  
+     |  getCard(self) -> 'Optional[Card]'
+     |      Fetch the next card from the queue. None if finished.
+     |  
+     |  get_queued_cards(self, *, fetch_limit: 'int' = 1, intraday_learning_only: 'bool' = False) -> 'QueuedCards'
+     |      Returns zero or more pending cards, and the remaining counts. Idempotent.
+     |  
+     |  nextIvl(self, card: 'Card', ease: 'int') -> 'Any'
+     |      Don't use this - it is only required by tests, and will be moved in the future.
+     |  
+     |  nextIvlStr(self, card: 'Card', ease: 'int', short: 'bool' = False) -> 'str'
+     |      Return the next interval for CARD as a string.
+     |  
+     |  reset(self) -> 'None'
+     |  
+     |  state_is_leech(self, new_state: 'SchedulingState') -> 'bool'
+     |      True if new state marks the card as a leech.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  active_decks
+     |  
+     |  lrnCount
+     |  
+     |  newCount
+     |  
+     |  reviewCount
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  reps = 0
+     |  
+     |  version = 3
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki.scheduler.legacy.SchedulerBaseWithLegacy:
+     |  
+     |  answerButtons(self, card: 'Card') -> 'int'
+     |  
+     |  buryCards = bury_cards(self, ids: 'Sequence[CardId]', manual: 'bool' = True) -> 'OpChangesWithCount'
+     |  
+     |  buryNote(self, nid: 'NoteId') -> 'None'
+     |  
+     |  deckDueTree(self) -> 'list'
+     |      List of (base name, did, rev, lrn, new, children)
+     |  
+     |  emptyDyn(self, did: 'Optional[DeckId]', lim: 'Optional[str]' = None) -> 'None'
+     |  
+     |  finishedMsg(self) -> 'str'
+     |  
+     |  forgetCards = schedule_cards_as_new(self, card_ids: 'Sequence[CardId]', *, restore_position: 'bool' = False, reset_counts: 'bool' = False, context: 'ScheduleCardsAsNew.Context.V | None' = None) -> 'OpChanges'
+     |  
+     |  rebuildDyn(self, did: 'Optional[DeckId]' = None) -> 'Optional[int]'
+     |  
+     |  remFromDyn(self, cids: 'list[CardId]') -> 'None'
+     |  
+     |  reschedCards(self, card_ids: 'list[CardId]', min_interval: 'int', max_interval: 'int') -> 'None'
+     |  
+     |  suspendCards = suspend_cards(self, ids: 'Sequence[CardId]') -> 'OpChangesWithCount'
+     |  
+     |  total_rev_for_current_deck(self) -> 'int'
+     |  
+     |  unburyCards(self) -> 'None'
+     |  
+     |  unburyCardsForDeck(self, type: 'str' = 'all') -> 'None'
+     |  
+     |  unsuspendCards = unsuspend_cards(self, ids: 'Sequence[CardId]') -> 'OpChanges'
+     |  
+     |  update_stats(self, deck_id: 'DeckId', new_delta: 'int' = 0, review_delta: 'int' = 0, milliseconds_delta: 'int' = 0) -> 'None'
+     |      # used by v2 scheduler and some add-ons
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki.scheduler.base.SchedulerBase:
+     |  
+     |  __init__(self, col: 'anki.collection.Collection') -> 'None'
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  add_or_update_filtered_deck(self, deck: 'FilteredDeckForUpdate') -> 'OpChangesWithId'
+     |  
+     |  bury_cards(self, ids: 'Sequence[CardId]', manual: 'bool' = True) -> 'OpChangesWithCount'
+     |  
+     |  bury_notes(self, note_ids: 'Sequence[NoteId]') -> 'OpChangesWithCount'
+     |  
+     |  congratulations_info(self) -> 'CongratsInfo'
+     |  
+     |  countIdx(self, card: 'Card') -> 'int'
+     |  
+     |  custom_study(self, request: 'CustomStudyRequest') -> 'OpChanges'
+     |  
+     |  custom_study_defaults(self, deck_id: 'DeckId') -> 'CustomStudyDefaults'
+     |  
+     |  deck_due_tree(self, top_deck_id: 'DeckId | None' = None) -> 'DeckTreeNode | None'
+     |      Returns a tree of decks with counts.
+     |      If top_deck_id provided, only the according subtree is returned.
+     |  
+     |  empty_filtered_deck(self, deck_id: 'DeckId') -> 'OpChanges'
+     |  
+     |  extend_limits(self, new: 'int', rev: 'int') -> 'None'
+     |  
+     |  filtered_deck_order_labels(self) -> 'Sequence[str]'
+     |  
+     |  get_or_create_filtered_deck(self, deck_id: 'DeckId') -> 'FilteredDeckForUpdate'
+     |  
+     |  have_buried(self) -> 'bool'
+     |  
+     |  have_buried_siblings(self) -> 'bool'
+     |  
+     |  have_manually_buried(self) -> 'bool'
+     |  
+     |  maybe_randomize_deck(self, did: 'DeckId | None' = None) -> 'None'
+     |      # for post-import
+     |  
+     |  order_cards(self, did: 'DeckId') -> 'None'
+     |  
+     |  randomize_cards(self, did: 'DeckId') -> 'None'
+     |  
+     |  rebuild_filtered_deck(self, deck_id: 'DeckId') -> 'OpChangesWithCount'
+     |  
+     |  reposition_defaults(self) -> 'RepositionDefaults'
+     |  
+     |  reposition_new_cards(self, card_ids: 'Sequence[CardId]', starting_from: 'int', step_size: 'int', randomize: 'bool', shift_existing: 'bool') -> 'OpChangesWithCount'
+     |  
+     |  reset_cards(self, ids: 'list[CardId]') -> 'None'
+     |      Completely reset cards for export.
+     |  
+     |  resort_conf(self, conf: 'DeckConfigDict') -> 'None'
+     |  
+     |  schedule_cards_as_new(self, card_ids: 'Sequence[CardId]', *, restore_position: 'bool' = False, reset_counts: 'bool' = False, context: 'ScheduleCardsAsNew.Context.V | None' = None) -> 'OpChanges'
+     |      Place cards back into the new queue.
+     |  
+     |  schedule_cards_as_new_defaults(self, context: 'ScheduleCardsAsNew.Context.V') -> 'ScheduleCardsAsNewDefaults'
+     |  
+     |  set_due_date(self, card_ids: 'Sequence[CardId]', days: 'str', config_key: 'Config.String.V | None' = None) -> 'OpChanges'
+     |      Set cards to be due in `days`, turning them into review cards if necessary.
+     |      `days` can be of the form '5' or '5..7'
+     |      If `config_key` is provided, provided days will be remembered in config.
+     |  
+     |  suspend_cards(self, ids: 'Sequence[CardId]') -> 'OpChangesWithCount'
+     |  
+     |  suspend_notes(self, ids: 'Sequence[NoteId]') -> 'OpChangesWithCount'
+     |  
+     |  unbury_cards(self, ids: 'Sequence[CardId]') -> 'OpChanges'
+     |  
+     |  unbury_deck(self, deck_id: 'DeckId', mode: 'UnburyDeck.Mode.V' = 0) -> 'OpChanges'
+     |  
+     |  unsuspend_cards(self, ids: 'Sequence[CardId]') -> 'OpChanges'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties inherited from anki.scheduler.base.SchedulerBase:
+     |  
+     |  day_cutoff
+     |  
+     |  today
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __getattr__(self, name: 'str') -> 'Any'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Class methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  register_deprecated_aliases(**kwargs: 'DeprecatedAliasTarget') -> 'None' from builtins.type
+     |      Manually add aliases that are not a simple transform.
+     |      
+     |      Either pass in a method, or a tuple of (variable, "variable"). The
+     |      latter is required because we want to ensure the provided arguments
+     |      are valid symbols, and we can't get a variable's name easily.
+     |  
+     |  register_deprecated_attributes(**kwargs: 'tuple[DeprecatedAliasTarget, DeprecatedAliasTarget | None]') -> 'None' from builtins.type
+     |      Manually add deprecated attributes without exact substitutes.
+     |      
+     |      Pass a tuple of (alias, replacement), where alias is the attribute's new
+     |      name (by convention: snakecase, prepended with '_legacy_'), and
+     |      replacement is any callable to be used instead in new code or None.
+     |      Also note the docstring of `register_deprecated_aliases`.
+     |      
+     |      E.g. given `def oldFunc(args): return new_func(additionalLogic(args))`,
+     |      rename `oldFunc` to `_legacy_old_func` and call
+     |      `register_deprecated_attributes(oldFunc=(_legacy_old_func, new_func))`.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __annotations__ = {'_deprecated_aliases': 'dict[str, str]', '_deprecat...
+
+DATA
+    Any = typing.Any
+        Special type indicating an unconstrained type.
+        
+        - Any is compatible with every type.
+        - Any assumed to have all methods.
+        - All values assumed to be instances of Any.
+        
+        Note that all the above statements are true from the point of view of
+        static type checkers. At runtime, Any should not be used with instance
+        or class checks.
+    
+    BUTTON_FOUR = 4
+    BUTTON_ONE = 1
+    BUTTON_THREE = 3
+    BUTTON_TWO = 2
+    CARD_TYPE_LRN = 1
+    CARD_TYPE_NEW = 0
+    CARD_TYPE_RELEARNING = 3
+    CARD_TYPE_REV = 2
+    COUNT_ANSWERED = 0
+    COUNT_REMAINING = 1
+    DECK_DYN = 1
+    DECK_STD = 0
+    DYN_ADDED = 5
+    DYN_BIGINT = 3
+    DYN_DUE = 6
+    DYN_DUEPRIORITY = 8
+    DYN_LAPSES = 4
+    DYN_MAX_SIZE = 99999
+    DYN_OLDEST = 0
+    DYN_RANDOM = 1
+    DYN_REVADDED = 7
+    DYN_SMALLINT = 2
+    HELP_SITE = 'https://docs.ankiweb.net/'
+    LEECH_SUSPEND = 0
+    LEECH_TAGONLY = 1
+    Literal = typing.Literal
+        Special typing form to define literal types (a.k.a. value types).
+        
+        This form can be used to indicate to type checkers that the corresponding
+        variable or function parameter has a value equivalent to the provided
+        literal (or one of several literals):
+        
+          def validate_simple(data: Any) -> Literal[True]:  # always returns True
+              ...
+        
+          MODE = Literal['r', 'rb', 'w', 'wb']
+          def open_helper(file: str, mode: MODE) -> str:
+              ...
+        
+          open_helper('/some/path', 'r')  # Passes type check
+          open_helper('/other/path', 'typo')  # Error in type checker
+        
+        Literal[...] cannot be subclassed. At runtime, an arbitrary value
+        is allowed as type argument to Literal[...], but type checkers may
+        impose restrictions.
+    
+    MEDIA_ADD = 0
+    MEDIA_REM = 1
+    MODEL_CLOZE = 1
+    MODEL_STD = 0
+    NEW_CARDS_DISTRIBUTE = 0
+    NEW_CARDS_DUE = 1
+    NEW_CARDS_FIRST = 2
+    NEW_CARDS_LAST = 1
+    NEW_CARDS_RANDOM = 0
+    Optional = typing.Optional
+        Optional type.
+        
+        Optional[X] is equivalent to Union[X, None].
+    
+    QUEUE_TYPE_DAY_LEARN_RELEARN = 3
+    QUEUE_TYPE_LRN = 1
+    QUEUE_TYPE_MANUALLY_BURIED = -3
+    QUEUE_TYPE_NEW = 0
+    QUEUE_TYPE_PREVIEW = 4
+    QUEUE_TYPE_REV = 2
+    QUEUE_TYPE_SIBLING_BURIED = -2
+    QUEUE_TYPE_SUSPENDED = -1
+    REM_CARD = 0
+    REM_DECK = 2
+    REM_NOTE = 1
+    REVLOG_CRAM = 3
+    REVLOG_LRN = 0
+    REVLOG_RELRN = 2
+    REVLOG_RESCHED = 4
+    REVLOG_REV = 1
+    STARTING_FACTOR = 2500
+    STARTING_FACTOR_FRACTION = 2.5
+    Sequence = typing.Sequence
+        A generic version of collections.abc.Sequence.
+    
+    TYPE_CHECKING = False
+    annotations = _Feature((3, 7, 0, 'beta', 1), (3, 10, 0, 'alpha', 0), 1...
+
+FILE
+    /Users/ryanfriberg/opt/anaconda3/lib/python3.9/site-packages/anki/scheduler/v3.py
+
+

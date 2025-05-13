@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anki_tools"
+version = "0.0.1"
+description = "A small Python package for misc. tools for the Anki flashcard app"
+authors = [
+    { name="Ryan Friberg", email="friberg.ryan@gmail.com" }
+]
+dependencies = []
+
+[project.scripts]
+anki_replace = "anki_tools.entrypoints.replace:main"

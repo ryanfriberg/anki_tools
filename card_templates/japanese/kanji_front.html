@@ -1,0 +1,50 @@
+<div style="font-size:34px">{{Kanji}}</div>
+
+<br>
+<br>
+<div id="tags-container"></div>
+
+<script>
+    var colors = [
+        "#f44336", "#9C27B0", "#3F51B5", "#03A9F4", "#009688",
+        "#C0CA33", "#FF9800", "#FF5722", "#9E9E9E", "#607D8B", 
+        "#FA7202"
+    ]
+
+    var tagContent = "{{Tags}}";
+
+    if (tagContent.search(" ") >= 1) {
+        var tags = tagContent.split(" ");
+    } else {
+        var tags = [tagContent];
+    }
+    
+    for (var i in tags) {
+        var newDiv = document.createElement("div");
+        newDiv.id = "tag";
+        newDiv.innerHTML = tags[i];
+        newDiv.style.display = "inline-block";
+
+        if (tags[i] == "N1" || tags[i] == "N2" || tags[i] == "N3" || 
+            tags[i] == "N4" || tags[i] == "N5" || tags[i] == "common" || 
+            tags[i] == "uncommon"){
+            newDiv.style.backgroundColor = colors[2]; 
+            newDiv.style.border = "1px solid" + colors[2]; 
+            document.getElementById("tags-container").appendChild(newDiv);
+        
+        } else if (tags[i] == "leech"){
+            newDiv.style.backgroundColor = colors[10]; 
+            newDiv.style.border = "1px solid" + colors[10];
+            document.getElementById("tags-container").appendChild(newDiv);
+
+        } else if ((tags[i] == "leech::toolkit-filtered") || (tags[i] == "front-kana")){
+            continue;
+        
+        } else {
+            newDiv.style.backgroundColor = colors[8];
+            newDiv.style.border = "1px solid" + colors[8];
+            document.getElementById("tags-container").appendChild(newDiv);
+
+        }
+    }
+</script>

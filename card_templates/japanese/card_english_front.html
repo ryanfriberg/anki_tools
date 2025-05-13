@@ -1,0 +1,161 @@
+{{Front}}
+<br>
+<br>
+{{type:Back}}
+
+<br>
+<br>
+<div id="variant-tags-container"></div>
+<div id="tags-container"></div>
+
+<br>
+<div id="context-tags-container"></div>
+
+<script>
+    var colors = [
+        "#f44336", "#9C27B0", "#3F51B5", "#03A9F4", "#009688",
+        "#C0CA33", "#FF9800", "#FF5722", "#9E9E9E", "#607D8B", 
+        "#FA7202", "#8A9A5B", '#86C6D3', '#674EA7'
+    ]
+
+    var context_tags = [
+        "Derogatory", "Slang", "Vulgar", "Colloquial", "Humble", "Polite", 
+        "Sports", "Figurative", "Engineering", "Electricity", "Networking", 
+        "Internet-slang", "Onomatopoea", "Astronomy", "Music", "Chemistry", 
+        "Physics", "Statistics", "Formal", "Computing", "Medicine", "Grammar", 
+        "Botany", "Food", "Cooking", "Psychology", "Honorific", "Law", "Logic", 
+        "Linguistics", "Sensitive", "Counter", "Mathematics", "Familiar", 
+        "Physiology", "Male-term", "Female-term", "Stock market", "Proverb", 
+        "Geology", "Anatomy", "General-term", "Video-Games", "Aviation", 
+        "Telecommunications", "Finance", "Geometry", "Jocular", "Humorous", 
+        "Printing", "onomatopoea", "四字熟語", "Euphemistic", "Mahjong",
+        "Children's-language","Business", "Sumo", "Dated", "Historical",
+        "Archaic", "Archaism", "Kabuki", "Christianity", "Bhuddism", "Go", 
+        "Obsolete", "Baseball", "Poetic", "Rare", "Horse-racing", "Brazilian", 
+        "Martial-arts", "Billiards-slang", "Shogi", "Hanafuda", "Seldom", 
+        "Shinto", "Osaka-Dialect", "Kansai-Dialect", "Kyuushuu-Dialect", 
+        "Hokkaido-Dialect", "Touhoku-Dialect", "Tsugaru-Dialect", "Abbreviation"
+    ]
+
+
+    var tagContent = "{{Tags}}";
+
+    if (tagContent.search(" ") >= 1) {
+        var tags = tagContent.split(" ");
+
+        // ORDER THE TAG BOX
+        for (var i in tags) {
+            if (tags[i] == "Intransitive" || tags[i] == "Transitive"){
+                const movedItem = tags.splice(i, 1);
+                tags.unshift(movedItem[0]);
+            }
+        }
+
+        // ORDER THE PART OF SPEECH
+        for (var i in tags) {
+            if (tags[i].includes("verb") || tags[i].includes("Verb") || 
+                tags[i].includes("Godan") || tags[i].includes("Ichidan") || 
+                tags[i].includes("Adj") || tags[i].includes("Adverb")){
+                const movedItem = tags.splice(i, 1);
+                tags.unshift(movedItem[0]);
+            }
+        }
+
+        // ORDER NOUN (separate from verbs for VNs)
+        for (var i in tags) {
+            if (tags[i] == "Noun"){
+                const movedItem = tags.splice(i, 1);
+                tags.unshift(movedItem[0]);
+            }
+        }
+
+        // ORDER THE RARITY
+        for (var i in tags) {
+            if (tags[i] == "N1" || tags[i] == "N2" || tags[i] == "N3" || 
+                tags[i] == "N4" || tags[i] == "N5" || tags[i] == "common" || 
+                tags[i] == "uncommon"){
+                const movedItem = tags.splice(i, 1);
+                tags.unshift(movedItem[0]);
+            }
+        }
+
+        // DISPLAY LEECH FIRST
+        for (var i in tags) {
+            if (tags[i] == "leech"){
+                const movedItem = tags.splice(i, 1);
+                tags.unshift(movedItem[0]);
+            }
+        }
+
+    } else {
+        var tags = [tagContent];
+    }
+    
+    for (var i in tags) {
+        var newDiv = document.createElement("div");
+        newDiv.id = "tag";
+        newDiv.innerHTML = tags[i];
+        newDiv.style.display = "inline-block";
+
+        if (tags[i] == "N1" || tags[i] == "N2" || tags[i] == "N3" || 
+            tags[i] == "N4" || tags[i] == "N5" || tags[i] == "common" || 
+            tags[i] == "uncommon"){
+            newDiv.style.backgroundColor = colors[2]; 
+            newDiv.style.border = "1px solid" + colors[2]; 
+            document.getElementById("tags-container").appendChild(newDiv);
+
+        } else if (tags[i].includes("verb") || tags[i].includes("Verb") || 
+            tags[i].includes("Godan") || tags[i].includes("Ichidan")){
+            newDiv.style.backgroundColor = colors[4]; 
+            newDiv.style.border = "1px solid" + colors[4]; 
+            document.getElementById("tags-container").appendChild(newDiv);
+        
+        } else if (tags[i] == "Noun"){
+            newDiv.style.backgroundColor = colors[9]; 
+            newDiv.style.border = "1px solid" + colors[9];
+            document.getElementById("tags-container").appendChild(newDiv);
+        
+        } else if (tags[i].includes("Adj") || tags[i].includes("Adv")){
+            newDiv.style.backgroundColor = colors[1]; 
+            newDiv.style.border = "1px solid" + colors[1];
+            document.getElementById("tags-container").appendChild(newDiv);
+
+        } else if (tags[i] == "Intransitive"){
+            newDiv.style.backgroundColor = colors[5]; 
+            newDiv.style.border = "1px solid" + colors[5]; 
+            document.getElementById("tags-container").appendChild(newDiv);
+        
+        } else if (tags[i] == "Transitive"){
+            newDiv.style.backgroundColor = colors[0]; 
+            newDiv.style.border = "1px solid" + colors[0];
+            document.getElementById("tags-container").appendChild(newDiv);
+        
+        } else if (tags[i] == "leech"){
+            newDiv.style.backgroundColor = colors[10]; 
+            newDiv.style.border = "1px solid" + colors[10];
+            document.getElementById("tags-container").appendChild(newDiv);
+
+        } else if ((tags[i] == "leech::toolkit-filtered") || (tags[i] == "front-kana")){
+            continue;
+        
+        } else if (tags[i] == "main"){
+            newDiv.style.backgroundColor = colors[13];
+            newDiv.style.border = "10px solid" + colors[13];
+            document.getElementById("variant-tags-container").appendChild(newDiv);
+        
+        } else if (tags[i] == "variant"){
+            newDiv.style.backgroundColor = colors[12];
+            newDiv.style.border = "10px solid" + colors[12];
+            document.getElementById("variant-tags-container").appendChild(newDiv);
+        
+        } else if (context_tags.includes(tags[i])) {
+            newDiv.style.backgroundColor = colors[11];
+            newDiv.style.border = "1px solid" + colors[11];
+            document.getElementById("context-tags-container").appendChild(newDiv);        
+        } else {
+            newDiv.style.backgroundColor = colors[8];
+            newDiv.style.border = "1px solid" + colors[8];
+            document.getElementById("tags-container").appendChild(newDiv);    
+        }
+    }
+</script>

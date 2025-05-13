@@ -1,0 +1,132 @@
+Help on module anki.notes in anki:
+
+NAME
+    anki.notes
+
+DESCRIPTION
+    # Copyright: Ankitects Pty Ltd and contributors
+    # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+CLASSES
+    anki._legacy.DeprecatedNamesMixin(builtins.object)
+        Note
+    
+    class Note(anki._legacy.DeprecatedNamesMixin)
+     |  Note(col: 'anki.collection.Collection', model: 'NotetypeDict | NotetypeId | None' = None, id: 'NoteId | None' = None) -> 'None'
+     |  
+     |  Method resolution order:
+     |      Note
+     |      anki._legacy.DeprecatedNamesMixin
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __contains__(self, key: 'str') -> 'bool'
+     |  
+     |  __getitem__(self, key: 'str') -> 'str'
+     |  
+     |  __init__(self, col: 'anki.collection.Collection', model: 'NotetypeDict | NotetypeId | None' = None, id: 'NoteId | None' = None) -> 'None'
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __setitem__(self, key: 'str', value: 'str') -> 'None'
+     |  
+     |  add_tag(self, tag: 'str') -> 'None'
+     |      Add tag. Duplicates will be stripped on save.
+     |  
+     |  card_ids(self) -> 'Sequence[anki.cards.CardId]'
+     |  
+     |  cards(self) -> 'list[anki.cards.Card]'
+     |  
+     |  cloze_numbers_in_fields(self) -> 'Sequence[int]'
+     |  
+     |  dupeOrEmpty = fields_check(self) -> 'NoteFieldsCheckResult.V'
+     |  
+     |  duplicate_or_empty = fields_check(self) -> 'NoteFieldsCheckResult.V'
+     |  
+     |  ephemeral_card(self, ord: 'int' = 0, *, custom_note_type: 'NotetypeDict' = None, custom_template: 'TemplateDict' = None, fill_empty: 'bool' = False) -> 'anki.cards.Card'
+     |  
+     |  fields_check(self) -> 'NoteFieldsCheckResult.V'
+     |  
+     |  flush(self) -> 'None'
+     |      For an undo entry, use col.update_note() instead.
+     |  
+     |  has_tag(self, tag: 'str') -> 'bool'
+     |  
+     |  items(self) -> 'list[tuple[str, str]]'
+     |  
+     |  joined_fields(self) -> 'str'
+     |  
+     |  keys(self) -> 'list[str]'
+     |  
+     |  load(self) -> 'None'
+     |  
+     |  note_type(self) -> 'NotetypeDict | None'
+     |  
+     |  remove_tag(self, tag: 'str') -> 'None'
+     |  
+     |  set_tags_from_str(self, tags: 'str') -> 'None'
+     |  
+     |  string_tags(self) -> 'str'
+     |  
+     |  values(self) -> 'list[str]'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |  
+     |  __annotations__ = {'id': 'NoteId', 'mid': 'NotetypeId'}
+     |  
+     |  data = ''
+     |  
+     |  flags = 0
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __getattr__(self, name: 'str') -> 'Any'
+     |  
+     |  ----------------------------------------------------------------------
+     |  Class methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  register_deprecated_aliases(**kwargs: 'DeprecatedAliasTarget') -> 'None' from builtins.type
+     |      Manually add aliases that are not a simple transform.
+     |      
+     |      Either pass in a method, or a tuple of (variable, "variable"). The
+     |      latter is required because we want to ensure the provided arguments
+     |      are valid symbols, and we can't get a variable's name easily.
+     |  
+     |  register_deprecated_attributes(**kwargs: 'tuple[DeprecatedAliasTarget, DeprecatedAliasTarget | None]') -> 'None' from builtins.type
+     |      Manually add deprecated attributes without exact substitutes.
+     |      
+     |      Pass a tuple of (alias, replacement), where alias is the attribute's new
+     |      name (by convention: snakecase, prepended with '_legacy_'), and
+     |      replacement is any callable to be used instead in new code or None.
+     |      Also note the docstring of `register_deprecated_aliases`.
+     |      
+     |      E.g. given `def oldFunc(args): return new_func(additionalLogic(args))`,
+     |      rename `oldFunc` to `_legacy_old_func` and call
+     |      `register_deprecated_attributes(oldFunc=(_legacy_old_func, new_func))`.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from anki._legacy.DeprecatedNamesMixin:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+DATA
+    DuplicateOrEmptyResult = <google.protobuf.internal.enum_type_wrapper.E...
+    MODEL_STD = 0
+    NoteFieldsCheckResult = <google.protobuf.internal.enum_type_wrapper.En...
+    NotetypeDict = dict[str, typing.Any]
+    Sequence = typing.Sequence
+        A generic version of collections.abc.Sequence.
+    
+    TemplateDict = dict[str, typing.Union[str, int, NoneType]]
+    annotations = _Feature((3, 7, 0, 'beta', 1), (3, 10, 0, 'alpha', 0), 1...
+
+FILE
+    /Users/ryanfriberg/opt/anaconda3/lib/python3.9/site-packages/anki/notes.py
+
+

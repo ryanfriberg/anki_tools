@@ -1,0 +1,276 @@
+<head>
+    <style>
+
+        body {
+            font-family: arial;
+            font-size: 20px;
+            text-align: center;
+            color: black;
+            background-color: white;
+        }
+
+        #tag{
+            font-size: 14px;
+            border-radius: 3px;
+            padding: 0.25rem;
+            margin: 0.25rem;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            text-align: center;
+        }
+        .nowrap {
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .nested-table {
+            width: 100%;
+        }
+        .example-word {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+        }
+        .furigana {
+            display: block;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .description-list {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-gap: 10px;
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .description-term {
+            align-self: center;
+        }
+    </style>
+    <script>
+        function createNestedTable(string) {
+            const rows = string.split('<br>');
+            const nestedTable = document.createElement('table');
+            nestedTable.classList.add('nested-table');
+
+            rows.forEach(row => {
+                const parts = row.split(/(?<=】)/g);
+
+                if ((parts.length == 1) && (parts[0] == "")) {
+                    return nestedTable;
+                }
+
+                const tableRow = document.createElement('tr');
+
+                parts.forEach((part, index) => {
+                    const cell = document.createElement('td');                    
+                    
+                    var idx = part.indexOf(" 【");
+                    if ((index === 0) && (idx != -1)) {
+                        const beforeTarget = part.slice(0, idx);
+                        const afterTarget = part.slice(idx+1);
+                        const topDiv = document.createElement('div');
+                        const botDiv = document.createElement('div');
+                        
+                        topDiv.textContent = beforeTarget;
+                        topDiv.classList.add('example-word');
+                        botDiv.classList.add('nowrap');
+
+                        cell.appendChild(topDiv);
+
+                        botDiv.textContent = afterTarget;
+                        botDiv.classList.add('furigana');
+                        botDiv.classList.add('nowrap');
+                        cell.appendChild(botDiv);
+                    } else {
+                        cell.textContent = part;
+                    }
+
+                    tableRow.appendChild(cell);
+                });
+
+                nestedTable.appendChild(tableRow);
+            });
+
+            return nestedTable;
+        }
+
+        function renderTable() {
+            document.getElementById('table-container').innerHTML = '';
+            // const string1 = "{{On-Examples}}";
+            // const string2 = "{{Kun-Examples}}";
+            const string1 = "";
+            const string2 = "苺 【いちご】 strawberry (esp. the garden strawberry, Fragaria x ananassa), 15,000 yen<br>いちご飴 【いちごあめ】 candy-coated strawberry on a stick<br>幌向苺 【ほろむいいちご】 cloudberry (Rubus chamaemorus)<br>木苺 【きいちご】 raspberry (any plant of genus Rubus, esp. Rubus palmatus var. coptophyllus)";
+
+            const mainTable = document.createElement('table');
+            const headerRow = document.createElement('tr');
+            const header1 = document.createElement('th');
+            header1.colSpan = 2;
+            header1.textContent = 'Onyomi Examples';
+            const header2 = document.createElement('th');
+            header2.colSpan = 2;
+            header2.textContent = 'Kunyomi Examples';
+            headerRow.appendChild(header1);
+            headerRow.appendChild(header2);
+            mainTable.appendChild(headerRow);
+
+            const nestedTable1 = createNestedTable(string1);
+            const nestedTable2 = createNestedTable(string2);
+            const maxRows = Math.max(nestedTable1.rows.length, nestedTable2.rows.length);
+
+            for (let i = 0; i < maxRows; i++) {
+                const row = document.createElement('tr');
+
+                if (i < nestedTable1.rows.length) {
+                    Array.from(nestedTable1.rows[i].cells).forEach(cell => {
+                        const newCell = document.createElement('td');
+                        newCell.innerHTML = cell.innerHTML;
+                        if (cell.classList.contains('nowrap')) {
+                            newCell.classList.add('nowrap');
+                        }
+                        row.appendChild(newCell);
+                    });
+                } else {
+                    row.appendChild(document.createElement('td'));
+                    row.appendChild(document.createElement('td'));
+                }
+
+                if (i < nestedTable2.rows.length) {
+                    Array.from(nestedTable2.rows[i].cells).forEach(cell => {
+                        const newCell = document.createElement('td');
+                        newCell.innerHTML = cell.innerHTML;
+                        if (cell.classList.contains('nowrap')) {
+                            newCell.classList.add('nowrap');
+                        }
+                        row.appendChild(newCell);
+                        
+                    });
+                } else {
+                    row.appendChild(document.createElement('td'));
+                    row.appendChild(document.createElement('td'));
+                }
+
+                mainTable.appendChild(row);
+            }
+
+            document.getElementById('table-container').appendChild(mainTable);
+        }
+
+        function setupAnkiHooks() { 
+            if (typeof anki !== 'undefined') {
+                anki.onFrontendReady(() => {
+                    setTimeout(renderTable, 0);
+                });
+            } else {
+                document.addEventListener('DOMContentLoaded', renderTable);
+            }
+
+            const observer = new MutationObserver(() => {
+                setTimeout(renderTable, 0);
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+    </script>
+</head>
+<body>
+    {{FrontSide}}
+    <hr id=answer>
+
+    <br><br>
+    <div class="description-list" style="font-size:26px">
+    <div class="description-term">Kun:</div>
+    <div class="description-details">{{Kunyomi}}</div>
+    <div class="description-term">On:</div>
+    <div class="description-details">{{Onyomi}}</div>
+    </div>
+
+
+    <br><br>
+    <div id="debug"></div>
+
+    <br><br>
+    {{Strokes}}
+
+    <br>
+    <br>
+    <div id="tags-container"></div>
+
+    <div style="font-size: 14px;">
+        <br>
+        Radical: {{Radical}} &nbsp; &nbsp; &nbsp;|
+        &nbsp; &nbsp; &nbsp;Type: {{Type}} &nbsp; &nbsp; &nbsp;
+        |&nbsp; &nbsp; &nbsp;Frequency: {{Frequency}}
+        <br>Variants: {{Variants}}
+    </div>
+    
+    <br><br>
+    <div id="table-container"></div>
+
+    <script>
+        var colors = [
+            "#f44336", "#9C27B0", "#3F51B5", "#03A9F4", "#009688",
+            "#C0CA33", "#FF9800", "#FF5722", "#9E9E9E", "#607D8B", 
+            "#FA7202"
+        ]
+
+        var tagContent = "{{Tags}}";
+        // var tagContent = "N1"
+
+        if (tagContent.search(" ") >= 1) {
+            var tags = tagContent.split(" ");
+        } else {
+            var tags = [tagContent];
+        }
+        
+        for (var i in tags) {
+            var newDiv = document.createElement("div");
+            newDiv.id = "tag";
+            newDiv.innerHTML = tags[i];
+            newDiv.style.display = "inline-block";
+
+            if (tags[i] == "N1" || tags[i] == "N2" || tags[i] == "N3" || 
+                tags[i] == "N4" || tags[i] == "N5" || tags[i] == "common" || 
+                tags[i] == "uncommon"){
+                newDiv.style.backgroundColor = colors[2]; 
+                newDiv.style.border = "1px solid" + colors[2]; 
+                document.getElementById("tags-container").appendChild(newDiv);
+            
+            } else if (tags[i] == "leech"){
+                newDiv.style.backgroundColor = colors[10]; 
+                newDiv.style.border = "1px solid" + colors[10];
+                document.getElementById("tags-container").appendChild(newDiv);
+
+            } else if (tags[i] == "leech::toolkit-filtered"){
+                continue;
+            
+            } else {
+                newDiv.style.backgroundColor = colors[8];
+                newDiv.style.border = "1px solid" + colors[8];
+                document.getElementById("tags-container").appendChild(newDiv);
+
+            }
+        }
+
+        setupAnkiHooks();
+    </script>
+</body>

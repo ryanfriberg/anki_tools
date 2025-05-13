@@ -1,0 +1,85 @@
+<head>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            text-align: center;
+        }
+        .nowrap {
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .nested-table {
+            width: 100%;
+        }
+
+        .description-list {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-gap: 10px;
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .description-term {
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+    {{FrontSide}}
+
+    <br>
+
+    <hr id=answer>
+
+    {{Meaning}}
+
+    <br><br>
+    <div class="description-list" 
+<body>
+    {{FrontSide}}
+
+    <br>
+
+    <hr id=answer>
+
+    {{Meaning}}
+
+    <br><br>
+    <div class="description-list" style="font-size:26px">
+    <div class="description-term">Kun:</div>
+    <div class="description-details">{{Kunyomi}}</div>
+    <div class="description-term">On:</div>
+    <div class="description-details">{{Onyomi}}</div>
+    </div>
+
+    <br><br>
+    {{Strokes}}
+
+    <br>
+    <br>
+    <div id="tags-container"></div>
+
+    <br>
+    Radical: {{Radical}} &nbsp; &nbsp; &nbsp;|
+    &nbsp; &nbsp; &nbsp;Type: {{Type}} &nbsp; &nbsp; &nbsp;
+    |&nbsp; &nbsp; &nbsp;Frequency: {{Frequency}}
+    
+    <bar>{{Variants}}
+
+
+    <br><br>
+    <div id="table-container"></div>
+

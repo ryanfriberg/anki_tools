@@ -1,0 +1,766 @@
+Help on module anki.collection in anki:
+
+NAME
+    anki.collection
+
+DESCRIPTION
+    # Copyright: Ankitects Pty Ltd and contributors
+    # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+CLASSES
+    anki._legacy.DeprecatedNamesMixin(builtins.object)
+        Collection
+    builtins.object
+        AddNoteRequest
+        CardIdsLimit
+        ComputedMemoryState
+        DeckIdLimit
+        NoteIdsLimit
+
+    class AddNoteRequest(builtins.object)
+     |  AddNoteRequest(note: 'Note', deck_id: 'DeckId') -> None
+     |
+     |  AddNoteRequest(note: 'Note', deck_id: 'DeckId')
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(self, other)
+     |
+     |  __init__(self, note: 'Note', deck_id: 'DeckId') -> None
+     |
+     |  __repr__(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {'deck_id': 'DeckId', 'note': 'Note'}
+     |
+     |  __dataclass_fields__ = {'deck_id': Field(name='deck_id',type='DeckId',...
+     |
+     |  __dataclass_params__ = _DataclassParams(init=True,repr=True,eq=True,or...
+     |
+     |  __hash__ = None
+
+    class CardIdsLimit(builtins.object)
+     |  CardIdsLimit(card_ids: 'Sequence[CardId]') -> None
+     |
+     |  CardIdsLimit(card_ids: 'Sequence[CardId]')
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(self, other)
+     |
+     |  __init__(self, card_ids: 'Sequence[CardId]') -> None
+     |
+     |  __repr__(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {'card_ids': 'Sequence[CardId]'}
+     |
+     |  __dataclass_fields__ = {'card_ids': Field(name='card_ids',type='Sequen...
+     |
+     |  __dataclass_params__ = _DataclassParams(init=True,repr=True,eq=True,or...
+     |
+     |  __hash__ = None
+
+    class Collection(anki._legacy.DeprecatedNamesMixin)
+     |  Collection(path: 'str', backend: 'RustBackend | None' = None, server: 'bool' = False) -> 'None'
+     |
+     |  Method resolution order:
+     |      Collection
+     |      anki._legacy.DeprecatedNamesMixin
+     |      builtins.object
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, path: 'str', backend: 'RustBackend | None' = None, server: 'bool' = False) -> 'None'
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  abort_media_sync(self) -> 'None'
+     |
+     |  abort_sync(self) -> 'None'
+     |
+     |  addNote(self, note: 'Note') -> 'int'
+     |      # @deprecated(replaced_by=add_note)
+     |
+     |  add_custom_undo_entry(self, name: 'str') -> 'int'
+     |      Add an empty undo entry with the given name.
+     |      The return value can be used to merge subsequent changes
+     |      with `merge_undo_entries()`.
+     |
+     |      You should only use this with your own custom actions - when
+     |      extending default Anki behaviour, you should merge into an
+     |      existing undo entry instead, so the existing undo name is
+     |      preserved, and changes are processed correctly.
+     |
+     |  add_image_occlusion_note(self, notetype_id: 'int', image_path: 'str', occlusions: 'str', header: 'str', back_extra: 'str', tags: 'list[str]') -> 'OpChanges'
+     |
+     |  add_image_occlusion_notetype(self) -> 'None'
+     |      Add notetype if missing.
+     |
+     |  add_note(self, note: 'Note', deck_id: 'DeckId') -> 'OpChanges'
+     |
+     |  add_notes(self, requests: 'Iterable[AddNoteRequest]') -> 'OpChanges'
+     |
+     |  after_note_updates(self, nids: 'list[NoteId]', mark_modified: 'bool', generate_cards: 'bool' = True) -> 'None'
+     |      If notes modified directly in database, call this afterwards.
+     |
+     |  all_browser_columns(self) -> 'Sequence[BrowserColumns.Column]'
+     |
+     |  all_config(self) -> 'dict[str, Any]'
+     |      This is a debugging aid. Prefer .get_config() when you know the key you need.
+     |
+     |  autosave(self) -> 'None'
+     |
+     |  await_backup_completion(self) -> 'None'
+     |      Throws if backup creation failed.
+     |
+     |  browser_row_for_id(self, id_: 'int') -> 'tuple[Generator[tuple[str, bool], None, None], BrowserRow.Color.V, str, int]'
+     |
+     |  build_search_string(self, *nodes: 'str | SearchNode', joiner: 'SearchJoiner' = 'AND') -> 'str'
+     |      Join one or more searches, and return a normalized search string.
+     |
+     |      To negate, wrap in a negated search term:
+     |
+     |          term = SearchNode(negated=col.group_searches(...))
+     |
+     |      Invalid searches will throw an exception.
+     |
+     |  cardStats(self, card: 'Card') -> 'str'
+     |
+     |  card_count(self) -> 'Any'
+     |
+     |  card_ids_of_note(self, note_id: 'NoteId') -> 'Sequence[CardId]'
+     |
+     |  card_stats(self, card_id: 'CardId', include_revlog: 'bool') -> 'str'
+     |
+     |  card_stats_data(self, card_id: 'CardId') -> 'stats_pb2.CardStatsResponse'
+     |      Returns the data required to show card stats.
+     |
+     |      If you wish to display the stats in a HTML table like Anki does,
+     |      you can use the .js file directly - see this add-on for an example:
+     |      https://ankiweb.net/shared/info/2179254157
+     |
+     |  close(self, downgrade: 'bool' = False) -> 'None'
+     |      Disconnect from DB.
+     |
+     |  close_for_full_sync(self) -> 'None'
+     |
+     |  compare_answer(self, expected: 'str', provided: 'str') -> 'str'
+     |
+     |  compute_memory_state(self, card_id: 'CardId') -> 'ComputedMemoryState'
+     |
+     |  create_backup(self, *, backup_folder: 'str', force: 'bool', wait_for_completion: 'bool') -> 'bool'
+     |      Create a backup if enough time has elapsed, and rotate old backups.
+     |
+     |      If `force` is true, the user's configured backup interval is ignored.
+     |      Returns true if backup created. This may be false in the force=True case,
+     |      if no changes have been made to the collection.
+     |
+     |      Throws on failure of current backup, or the previous backup if it was not
+     |      awaited.
+     |
+     |  default_deck_for_notetype(self, notetype_id: 'NotetypeId') -> 'DeckId | None'
+     |      If 'change deck depending on notetype' is enabled in the preferences,
+     |      return the last deck used with the provided notetype, if any..
+     |
+     |  defaults_for_adding(self, *, current_review_card: 'Card | None') -> 'anki.notes.DefaultsForAdding'
+     |      Get starting deck and notetype for add screen.
+     |      An option in the preferences controls whether this will be based on the current deck
+     |      or current notetype.
+     |
+     |  emptyCids(self) -> 'list[CardId]'
+     |
+     |  export_anki_package(self, *, out_path: 'str', limit: 'ExportLimit', with_scheduling: 'bool', with_media: 'bool', legacy_support: 'bool') -> 'int'
+     |
+     |  export_card_csv(self, *, out_path: 'str', limit: 'ExportLimit', with_html: 'bool') -> 'int'
+     |
+     |  export_collection_package(self, out_path: 'str', include_media: 'bool', legacy: 'bool') -> 'None'
+     |
+     |  export_note_csv(self, *, out_path: 'str', limit: 'ExportLimit', with_html: 'bool', with_tags: 'bool', with_deck: 'bool', with_notetype: 'bool', with_guid: 'bool') -> 'int'
+     |
+     |  extract_cloze_for_typing(self, text: 'str', ordinal: 'int') -> 'str'
+     |
+     |  field_names_for_note_ids(self, nids: 'Sequence[int]') -> 'Sequence[str]'
+     |
+     |  find_and_replace(self, *, note_ids: 'Sequence[NoteId]', search: 'str', replacement: 'str', regex: 'bool' = False, field_name: 'str | None' = None, match_case: 'bool' = False) -> 'OpChangesWithCount'
+     |      Find and replace fields in a note. Returns changed note count.
+     |
+     |  find_cards(self, query: 'str', order: 'bool | str | BrowserColumns.Column' = False, reverse: 'bool' = False) -> 'Sequence[CardId]'
+     |      Return card ids matching the provided search.
+     |
+     |      To programmatically construct a search string, see .build_search_string().
+     |
+     |      If order=True, use the sort order stored in the collection config
+     |      If order=False, do no ordering
+     |
+     |      If order is a string, that text is added after 'order by' in the sql statement.
+     |      You must add ' asc' or ' desc' to the order, as Anki will replace asc with
+     |      desc and vice versa when reverse is set in the collection config, eg
+     |      order="c.ivl asc, c.due desc".
+     |
+     |      If order is a BrowserColumns.Column that supports sorting, sort using that
+     |      column. All available columns are available through col.all_browser_columns()
+     |      or browser.table._model.columns and support sorting cards unless column.sorting_cards
+     |      is set to BrowserColumns.SORTING_NONE, .SORTING_NOTES_ASCENDING, or
+     |      .SORTING_NOTES_DESCENDING.
+     |
+     |      The reverse argument only applies when a BrowserColumns.Column is provided;
+     |      otherwise the collection config defines whether reverse is set or not.
+     |
+     |  find_dupes(self, field_name: 'str', search: 'str' = '') -> 'list[tuple[str, list]]'
+     |      # returns array of ("dupestr", [nids])
+     |
+     |  find_notes(self, query: 'str', order: 'bool | str | BrowserColumns.Column' = False, reverse: 'bool' = False) -> 'Sequence[NoteId]'
+     |      Return note ids matching the provided search.
+     |
+     |      To programmatically construct a search string, see .build_search_string().
+     |      The order parameter is documented in .find_cards().
+     |
+     |  fix_integrity(self) -> 'tuple[str, bool]'
+     |      Fix possible problems and rebuild caches.
+     |
+     |      Returns tuple of (error: str, ok: bool). 'ok' will be true if no
+     |      problems were found.
+     |
+     |  flush(self) -> 'None'
+     |
+     |  format_timespan(self, seconds: 'float', context: 'FormatTimeSpan.Context.V' = 2) -> 'str'
+     |
+     |  full_upload_or_download(self, *, auth: 'SyncAuth', server_usn: 'int | None', upload: 'bool') -> 'None'
+     |
+     |  fuzz_delta(self, card_id: 'CardId', interval: 'int') -> 'int'
+     |      The delta days of fuzz applied if reviewing the card in v3.
+     |
+     |  genCards(self, nids: 'list[NoteId]') -> 'list[int]'
+     |
+     |  get_aux_notetype_config(self, id: 'NotetypeId', key: 'str', default: 'Any' = None) -> 'Any'
+     |
+     |  get_aux_template_config(self, id: 'NotetypeId', card_ordinal: 'int', key: 'str', default: 'Any' = None) -> 'Any'
+     |
+     |  get_browser_column(self, key: 'str') -> 'BrowserColumns.Column | None'
+     |
+     |  get_card(self, id: 'CardId') -> 'Card'
+     |
+     |  get_config(self, key: 'str', default: 'Any' = None) -> 'Any'
+     |
+     |  get_config_bool(self, key: 'Config.Bool.V') -> 'bool'
+     |
+     |  get_config_string(self, key: 'Config.String.V') -> 'str'
+     |
+     |  get_csv_metadata(self, path: 'str', delimiter: 'Delimiter.V | None') -> 'CsvMetadata'
+     |
+     |  get_empty_cards(self) -> 'EmptyCardsReport'
+     |
+     |  get_image_for_occlusion(self, path: 'str | None') -> 'GetImageForOcclusionResponse'
+     |
+     |  get_image_occlusion_note(self, note_id: 'int | None') -> 'GetImageOcclusionNoteResponse'
+     |
+     |  get_note(self, id: 'NoteId') -> 'Note'
+     |
+     |  get_preferences(self) -> 'Preferences'
+     |
+     |  group_searches(self, *nodes: 'str | SearchNode', joiner: 'SearchJoiner' = 'AND') -> 'SearchNode'
+     |      Join provided search nodes and strings into a single SearchNode.
+     |      If a single SearchNode is provided, it is returned as-is.
+     |      At least one node must be provided.
+     |
+     |  i18n_resources(self, modules: 'Sequence[str]') -> 'bytes'
+     |
+     |  import_anki_package(self, request: 'ImportAnkiPackageRequest') -> 'ImportLogWithChanges'
+     |
+     |  import_csv(self, request: 'ImportCsvRequest') -> 'ImportLogWithChanges'
+     |
+     |  import_json_file(self, path: 'str') -> 'ImportLogWithChanges'
+     |
+     |  import_json_string(self, json: 'str') -> 'ImportLogWithChanges'
+     |
+     |  is_empty(self) -> 'bool'
+     |
+     |  join_searches(self, existing_node: 'SearchNode', additional_node: 'SearchNode', operator: "Literal['AND', 'OR']") -> 'str'
+     |      AND or OR `additional_term` to `existing_term`, without wrapping `existing_term` in brackets.
+     |      Used by the Browse screen to avoid adding extra brackets when joining.
+     |      If you're building a search query yourself, you probably don't need this.
+     |
+     |  latest_progress(self) -> 'Progress'
+     |
+     |  load_browser_card_columns(self) -> 'list[str]'
+     |      Return the stored card column names and ensure the backend columns are set and in sync.
+     |
+     |  load_browser_note_columns(self) -> 'list[str]'
+     |      Return the stored note column names and ensure the backend columns are set and in sync.
+     |
+     |  log(self, *args: 'Any', **kwargs: 'Any') -> 'None'
+     |
+     |  media_sync_status(self) -> 'MediaSyncStatus'
+     |      This will throw if the sync failed with an error.
+     |
+     |  merge_undo_entries(self, target: 'int') -> 'OpChanges'
+     |      Combine multiple undoable operations into one.
+     |
+     |      After a standard Anki action, you can use col.undo_status().last_step
+     |      to retrieve the target to merge into. When defining your own custom
+     |      actions, you can use `add_custom_undo_entry()` to define a custom
+     |      undo name.
+     |
+     |  mod_schema(self, check: 'bool') -> 'None'
+     |      Mark schema modified. GUI catches this and will ask user if required.
+     |
+     |  name(self) -> 'Any'
+     |
+     |  newNote(self, forDeck: 'bool' = True) -> 'Note'
+     |      Return a new note with the current model.
+     |
+     |  new_note(self, notetype: 'NotetypeDict') -> 'Note'
+     |
+     |  nextID(self, type: 'str', inc: 'bool' = True) -> 'Any'
+     |
+     |  note_count(self) -> 'int'
+     |
+     |  op_made_changes(self, changes: 'OpChanges') -> 'bool'
+     |
+     |  optimize(self) -> 'None'
+     |
+     |  redo(self) -> 'OpChangesAfterUndo'
+     |      Returns result of backend redo operation, or throws UndoEmpty.
+     |
+     |  remNotes(self, ids: 'Sequence[NoteId]') -> 'None'
+     |
+     |  remove_cards_and_orphaned_notes(self, card_ids: 'Sequence[CardId]') -> 'None'
+     |      You probably want .remove_notes_by_card() instead.
+     |
+     |  remove_config(self, key: 'str') -> 'OpChanges'
+     |
+     |  remove_notes(self, note_ids: 'Sequence[NoteId]') -> 'OpChangesWithCount'
+     |
+     |  remove_notes_by_card(self, card_ids: 'list[CardId]') -> 'None'
+     |
+     |  render_markdown(self, text: 'str', sanitize: 'bool' = True) -> 'str'
+     |      Not intended for public consumption at this time.
+     |
+     |  reopen(self, after_full_sync: 'bool' = False) -> 'None'
+     |
+     |  replace_in_search_node(self, existing_node: 'SearchNode', replacement_node: 'SearchNode') -> 'str'
+     |      If nodes of the same type as `replacement_node` are found in existing_node, replace them.
+     |
+     |      You can use this to replace any "deck" clauses in a search with a different deck for example.
+     |
+     |  reset(self) -> 'None'
+     |
+     |  save(self, **args: 'Any') -> 'None'
+     |
+     |  sched_ver(self) -> 'Literal[1, 2]'
+     |      For backwards compatibility, the v3 scheduler currently returns 2.
+     |      Use the separate v3_scheduler() method to check if it is active.
+     |
+     |  schema_changed(self) -> 'bool'
+     |      True if schema changed since last sync.
+     |
+     |  setMod(self) -> 'None'
+     |
+     |  set_aux_notetype_config(self, id: 'NotetypeId', key: 'str', value: 'Any', *, undoable: 'bool' = False) -> 'OpChanges'
+     |
+     |  set_aux_template_config(self, id: 'NotetypeId', card_ordinal: 'int', key: 'str', value: 'Any', *, undoable: 'bool' = False) -> 'OpChanges'
+     |
+     |  set_browser_card_columns(self, columns: 'list[str]') -> 'None'
+     |
+     |  set_browser_note_columns(self, columns: 'list[str]') -> 'None'
+     |
+     |  set_config(self, key: 'str', val: 'Any', *, undoable: 'bool' = False) -> 'OpChanges'
+     |      Set a single config variable to any JSON-serializable value. The config
+     |      is currently sent on every sync, so please don't store more than a few
+     |      kilobytes in it.
+     |
+     |      By default, no undo entry will be created, but the existing undo history
+     |      will be preserved. Set `undoable=True` to allow the change to be undone;
+     |      see undo code for how you can merge multiple undo entries.
+     |
+     |  set_config_bool(self, key: 'Config.Bool.V', value: 'bool', *, undoable: 'bool' = False) -> 'OpChanges'
+     |
+     |  set_config_string(self, key: 'Config.String.V', value: 'str', undoable: 'bool' = False) -> 'OpChanges'
+     |
+     |  set_deck(self, card_ids: 'Sequence[CardId]', deck_id: 'int') -> 'OpChangesWithCount'
+     |
+     |  set_preferences(self, prefs: 'Preferences') -> 'OpChanges'
+     |
+     |  set_schema_modified(self) -> 'None'
+     |
+     |  set_user_flag_for_cards(self, flag: 'int', cids: 'Sequence[CardId]') -> 'OpChangesWithCount'
+     |
+     |  set_v3_scheduler(self, enabled: 'bool') -> 'None'
+     |
+     |  set_wants_abort(self) -> 'None'
+     |
+     |  startTimebox(self) -> 'None'
+     |
+     |  stats(self) -> 'anki.stats.CollectionStats'
+     |
+     |  studied_today(self) -> 'str'
+     |
+     |  sync_collection(self, auth: 'SyncAuth', sync_media: 'bool') -> 'SyncOutput'
+     |
+     |  sync_login(self, username: 'str', password: 'str', endpoint: 'str | None') -> 'SyncAuth'
+     |
+     |  sync_media(self, auth: 'SyncAuth') -> 'None'
+     |
+     |  sync_status(self, auth: 'SyncAuth') -> 'SyncStatus'
+     |
+     |  timeboxReached(self) -> 'Literal[False] | tuple[Any, int]'
+     |      Return (elapsedTime, reps) if timebox reached, or False.
+     |
+     |  undo(self) -> 'OpChangesAfterUndo'
+     |      Returns result of backend undo operation, or throws UndoEmpty.
+     |
+     |  undo_name(self) -> 'str | None'
+     |      Undo menu item name, or None if undo unavailable.
+     |
+     |  undo_status(self) -> 'UndoStatus'
+     |      Return the undo status.
+     |
+     |  updateFieldCache(self, nids: 'list[NoteId]') -> 'None'
+     |
+     |  update_card(self, card: 'Card', skip_undo_entry: 'bool' = False) -> 'OpChanges'
+     |      Save card changes to database.
+     |
+     |  update_cards(self, cards: 'Sequence[Card]', skip_undo_entry: 'bool' = False) -> 'OpChanges'
+     |      Save card changes to database.
+     |
+     |  update_image_occlusion_note(self, note_id: 'int | None', occlusions: 'str | None', header: 'str | None', back_extra: 'str | None', tags: 'list[str] | None') -> 'OpChanges'
+     |
+     |  update_note(self, note: 'Note', skip_undo_entry: 'bool' = False) -> 'OpChanges'
+     |      Save note changes to database.
+     |
+     |  update_notes(self, notes: 'Sequence[Note]', skip_undo_entry: 'bool' = False) -> 'OpChanges'
+     |      Save note changes to database.
+     |
+     |  upgrade_to_v2_scheduler(self) -> 'None'
+     |
+     |  usn(self) -> 'int'
+     |
+     |  v3_scheduler(self) -> 'bool'
+     |
+     |  weakref(self) -> 'Collection'
+     |      Shortcut to create a weak reference that doesn't break code completion.
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  initialize_backend_logging(path: 'str | None' = None) -> 'None'
+     |      Enable terminal and optional file-based logging. Must be called only once.
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |
+     |  backend
+     |
+     |  mod
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  crt
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {'sched': 'V3Scheduler | DummyScheduler'}
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |
+     |  __getattr__(self, name: 'str') -> 'Any'
+     |
+     |  ----------------------------------------------------------------------
+     |  Class methods inherited from anki._legacy.DeprecatedNamesMixin:
+     |
+     |  register_deprecated_aliases(**kwargs: 'DeprecatedAliasTarget') -> 'None' from builtins.type
+     |      Manually add aliases that are not a simple transform.
+     |
+     |      Either pass in a method, or a tuple of (variable, "variable"). The
+     |      latter is required because we want to ensure the provided arguments
+     |      are valid symbols, and we can't get a variable's name easily.
+     |
+     |  register_deprecated_attributes(**kwargs: 'tuple[DeprecatedAliasTarget, DeprecatedAliasTarget | None]') -> 'None' from builtins.type
+     |      Manually add deprecated attributes without exact substitutes.
+     |
+     |      Pass a tuple of (alias, replacement), where alias is the attribute's new
+     |      name (by convention: snakecase, prepended with '_legacy_'), and
+     |      replacement is any callable to be used instead in new code or None.
+     |      Also note the docstring of `register_deprecated_aliases`.
+     |
+     |      E.g. given `def oldFunc(args): return new_func(additionalLogic(args))`,
+     |      rename `oldFunc` to `_legacy_old_func` and call
+     |      `register_deprecated_attributes(oldFunc=(_legacy_old_func, new_func))`.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from anki._legacy.DeprecatedNamesMixin:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+    class ComputedMemoryState(builtins.object)
+     |  ComputedMemoryState(desired_retention: 'float', stability: 'float | None' = None, difficulty: 'float | None' = None) -> None
+     |
+     |  ComputedMemoryState(desired_retention: 'float', stability: 'float | None' = None, difficulty: 'float | None' = None)
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(self, other)
+     |
+     |  __init__(self, desired_retention: 'float', stability: 'float | None' = None, difficulty: 'float | None' = None) -> None
+     |
+     |  __repr__(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {'desired_retention': 'float', 'difficulty': 'float ...
+     |
+     |  __dataclass_fields__ = {'desired_retention': Field(name='desired_reten...
+     |
+     |  __dataclass_params__ = _DataclassParams(init=True,repr=True,eq=True,or...
+     |
+     |  __hash__ = None
+     |
+     |  difficulty = None
+     |
+     |  stability = None
+
+    class DeckIdLimit(builtins.object)
+     |  DeckIdLimit(deck_id: 'DeckId') -> None
+     |
+     |  DeckIdLimit(deck_id: 'DeckId')
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(self, other)
+     |
+     |  __init__(self, deck_id: 'DeckId') -> None
+     |
+     |  __repr__(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {'deck_id': 'DeckId'}
+     |
+     |  __dataclass_fields__ = {'deck_id': Field(name='deck_id',type='DeckId',...
+     |
+     |  __dataclass_params__ = _DataclassParams(init=True,repr=True,eq=True,or...
+     |
+     |  __hash__ = None
+
+    class NoteIdsLimit(builtins.object)
+     |  NoteIdsLimit(note_ids: 'Sequence[NoteId]') -> None
+     |
+     |  NoteIdsLimit(note_ids: 'Sequence[NoteId]')
+     |
+     |  Methods defined here:
+     |
+     |  __eq__(self, other)
+     |
+     |  __init__(self, note_ids: 'Sequence[NoteId]') -> None
+     |
+     |  __repr__(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {'note_ids': 'Sequence[NoteId]'}
+     |
+     |  __dataclass_fields__ = {'note_ids': Field(name='note_ids',type='Sequen...
+     |
+     |  __dataclass_params__ = _DataclassParams(init=True,repr=True,eq=True,or...
+     |
+     |  __hash__ = None
+
+FUNCTIONS
+    from_json_bytes = loads(obj, /)
+        Deserialize JSON to Python objects.
+
+    pb_export_limit(limit: 'ExportLimit') -> 'import_export_pb2.ExportLimit'
+
+    to_json_bytes = dumps(obj, /, default=None, option=None)
+        Serialize Python objects to JSON.
+
+DATA
+    Any = typing.Any
+        Special type indicating an unconstrained type.
+
+        - Any is compatible with every type.
+        - Any assumed to have all methods.
+        - All values assumed to be instances of Any.
+
+        Note that all the above statements are true from the point of view of
+        static type checkers. At runtime, Any should not be used with instance
+        or class checks.
+
+    BUTTON_FOUR = 4
+    BUTTON_ONE = 1
+    BUTTON_THREE = 3
+    BUTTON_TWO = 2
+    CARD_TYPE_LRN = 1
+    CARD_TYPE_NEW = 0
+    CARD_TYPE_RELEARNING = 3
+    CARD_TYPE_REV = 2
+    COUNT_ANSWERED = 0
+    COUNT_REMAINING = 1
+    DECK_DYN = 1
+    DECK_STD = 0
+    DYN_ADDED = 5
+    DYN_BIGINT = 3
+    DYN_DUE = 6
+    DYN_DUEPRIORITY = 8
+    DYN_LAPSES = 4
+    DYN_MAX_SIZE = 99999
+    DYN_OLDEST = 0
+    DYN_RANDOM = 1
+    DYN_REVADDED = 7
+    DYN_SMALLINT = 2
+    Delimiter = <google.protobuf.internal.enum_type_wrapper.EnumTypeWrappe...
+    DupeResolution = <google.protobuf.internal.enum_type_wrapper.EnumTypeW...
+    ExportLimit = typing.Union[anki.collection.DeckIdLimit, anki.c...IdsLi...
+    Generator = typing.Generator
+        A generic version of collections.abc.Generator.
+
+    HELP_SITE = 'https://docs.ankiweb.net/'
+    HelpPage = <google.protobuf.internal.enum_type_wrapper.EnumTypeWrapper...
+    Iterable = typing.Iterable
+        A generic version of collections.abc.Iterable.
+
+    LEECH_SUSPEND = 0
+    LEECH_TAGONLY = 1
+    Literal = typing.Literal
+        Special typing form to define literal types (a.k.a. value types).
+
+        This form can be used to indicate to type checkers that the corresponding
+        variable or function parameter has a value equivalent to the provided
+        literal (or one of several literals):
+
+          def validate_simple(data: Any) -> Literal[True]:  # always returns True
+              ...
+
+          MODE = Literal['r', 'rb', 'w', 'wb']
+          def open_helper(file: str, mode: MODE) -> str:
+              ...
+
+          open_helper('/some/path', 'r')  # Passes type check
+          open_helper('/other/path', 'typo')  # Error in type checker
+
+        Literal[...] cannot be subclassed. At runtime, an arbitrary value
+        is allowed as type argument to Literal[...], but type checkers may
+        impose restrictions.
+
+    MEDIA_ADD = 0
+    MEDIA_REM = 1
+    MODEL_CLOZE = 1
+    MODEL_STD = 0
+    NEW_CARDS_DISTRIBUTE = 0
+    NEW_CARDS_DUE = 1
+    NEW_CARDS_FIRST = 2
+    NEW_CARDS_LAST = 1
+    NEW_CARDS_RANDOM = 0
+    NotetypeDict = dict[str, typing.Any]
+    QUEUE_TYPE_DAY_LEARN_RELEARN = 3
+    QUEUE_TYPE_LRN = 1
+    QUEUE_TYPE_MANUALLY_BURIED = -3
+    QUEUE_TYPE_NEW = 0
+    QUEUE_TYPE_PREVIEW = 4
+    QUEUE_TYPE_REV = 2
+    QUEUE_TYPE_SIBLING_BURIED = -2
+    QUEUE_TYPE_SUSPENDED = -1
+    REM_CARD = 0
+    REM_DECK = 2
+    REM_NOTE = 1
+    REVLOG_CRAM = 3
+    REVLOG_LRN = 0
+    REVLOG_RELRN = 2
+    REVLOG_RESCHED = 4
+    REVLOG_REV = 1
+    STARTING_FACTOR = 2500
+    STARTING_FACTOR_FRACTION = 2.5
+    SearchJoiner = typing.Literal['AND', 'OR']
+    Sequence = typing.Sequence
+        A generic version of collections.abc.Sequence.
+
+    TYPE_CHECKING = False
+    Union = typing.Union
+        Union type; Union[X, Y] means either X or Y.
+
+        To define a union, use e.g. Union[int, str].  Details:
+        - The arguments must be types and there must be at least one.
+        - None as an argument is a special case and is replaced by
+          type(None).
+        - Unions of unions are flattened, e.g.::
+
+            Union[Union[int, str], float] == Union[int, str, float]
+
+        - Unions of a single argument vanish, e.g.::
+
+            Union[int] == int  # The constructor actually returns int
+
+        - Redundant arguments are skipped, e.g.::
+
+            Union[int, str, int] == Union[int, str]
+
+        - When comparing unions, the argument order is ignored, e.g.::
+
+            Union[int, str] == Union[str, int]
+
+        - You cannot subclass or instantiate a union.
+        - You can use Optional[X] as a shorthand for Union[X, None].
+
+    annotations = _Feature((3, 7, 0, 'beta', 1), (3, 10, 0, 'alpha', 0), 1...
+
+FILE
+    /Users/ryanfriberg/opt/anaconda3/lib/python3.9/site-packages/anki/collection.py

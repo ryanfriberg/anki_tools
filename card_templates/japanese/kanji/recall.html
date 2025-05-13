@@ -1,0 +1,215 @@
+<head>
+    <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            text-align: center;
+        }
+        .nowrap {
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .nested-table {
+            width: 100%;
+        }
+        .example-word {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+        }
+        .furigana {
+            display: block;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .description-list {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-gap: 10px;
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .description-term {
+            align-self: center;
+        }
+    </style>
+    <script>
+        function createNestedTable(string) {
+            const rows = string.split('<br>');
+            const nestedTable = document.createElement('table');
+            nestedTable.classList.add('nested-table');
+
+            rows.forEach(row => {
+                const parts = row.split(/(?<=】)/g);
+
+                if ((parts.length == 1) && (parts[0] == "")) {
+                    return nestedTable;
+                }
+
+                const tableRow = document.createElement('tr');
+
+                parts.forEach((part, index) => {
+                    const cell = document.createElement('td');                    
+                    
+                    var idx = part.indexOf(" 【");
+                    if ((index === 0) && (idx != -1)) {
+                        const beforeTarget = part.slice(0, idx);
+                        const afterTarget = part.slice(idx+1);
+                        const topDiv = document.createElement('div');
+                        const botDiv = document.createElement('div');
+                        
+                        topDiv.textContent = beforeTarget;
+                        topDiv.classList.add('example-word');
+                        botDiv.classList.add('nowrap');
+
+                        cell.appendChild(topDiv);
+
+                        botDiv.textContent = afterTarget;
+                        botDiv.classList.add('furigana');
+                        botDiv.classList.add('nowrap');
+                        cell.appendChild(botDiv);
+                    } else {
+                        cell.textContent = part;
+                    }
+
+                    tableRow.appendChild(cell);
+                });
+
+                nestedTable.appendChild(tableRow);
+            });
+
+            return nestedTable;
+        }
+
+        function renderTable() {
+            document.getElementById('table-container').innerHTML = '';
+            const string1 = "{{On-Examples}}";
+            const string2 = "{{Kun-Examples}}";
+            
+            const mainTable = document.createElement('table');
+            const headerRow = document.createElement('tr');
+            const header1 = document.createElement('th');
+            header1.colSpan = 2;
+            header1.textContent = 'Onyomi Examples';
+            const header2 = document.createElement('th');
+            header2.colSpan = 2;
+            header2.textContent = 'Kunyomi Examples';
+            headerRow.appendChild(header1);
+            headerRow.appendChild(header2);
+            mainTable.appendChild(headerRow);
+
+            const nestedTable1 = createNestedTable(string1);
+            const nestedTable2 = createNestedTable(string2);
+            const maxRows = Math.max(nestedTable1.rows.length, nestedTable2.rows.length);
+
+            for (let i = 0; i < maxRows; i++) {
+                const row = document.createElement('tr');
+
+                if (i < nestedTable1.rows.length) {
+                    Array.from(nestedTable1.rows[i].cells).forEach(cell => {
+                        const newCell = document.createElement('td');
+                        newCell.innerHTML = cell.innerHTML;
+                        if (cell.classList.contains('nowrap')) {
+                            newCell.classList.add('nowrap');
+                        }
+                        row.appendChild(newCell);
+                    });
+                } else {
+                    row.appendChild(document.createElement('td'));
+                    row.appendChild(document.createElement('td'));
+                }
+
+                if (i < nestedTable2.rows.length) {
+                    Array.from(nestedTable2.rows[i].cells).forEach(cell => {
+                        const newCell = document.createElement('td');
+                        newCell.innerHTML = cell.innerHTML;
+                        if (cell.classList.contains('nowrap')) {
+                            newCell.classList.add('nowrap');
+                        }
+                        row.appendChild(newCell);
+                        
+                    });
+                } else {
+                    row.appendChild(document.createElement('td'));
+                    row.appendChild(document.createElement('td'));
+                }
+
+                mainTable.appendChild(row);
+            }
+
+            document.getElementById('table-container').appendChild(mainTable);
+        }
+
+        function setupAnkiHooks() { 
+            if (typeof anki !== 'undefined') {
+                anki.onFrontendReady(() => {
+                    setTimeout(renderTable, 0);
+                });
+            } else {
+                document.addEventListener('DOMContentLoaded', renderTable);
+            }
+
+            const observer = new MutationObserver(() => {
+                setTimeout(renderTable, 0);
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+    </script>
+</head>
+<body>
+    {{FrontSide}}
+    
+    <hr id=answer>
+
+    <br><br>
+    <div class="description-list" style="font-size:26px">
+    <div class="description-term">Kun:</div>
+    <div class="description-details">{{Kunyomi}}</div>
+    <div class="description-term">On:</div>
+    <div class="description-details">{{Onyomi}}</div>
+    </div>
+
+    <br><br>
+    {{Strokes}}
+
+    <div style="font-size: 14px;">
+        <br>
+        Radical: {{Radical}} &nbsp; &nbsp; &nbsp;|
+        &nbsp; &nbsp; &nbsp;Type: {{Type}} &nbsp; &nbsp; &nbsp;
+        |&nbsp; &nbsp; &nbsp;Frequency: {{Frequency}}
+        <br>Variants: {{Variants}}
+    </div>
+    
+    <bar>{{Variants}}
+
+    <br><br>
+    <div id="table-container"></div>
+
+    <script>
+        renderTable();
+    </script>
+</body>
+
+
+
+
+
+    

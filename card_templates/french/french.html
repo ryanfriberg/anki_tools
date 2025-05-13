@@ -1,0 +1,96 @@
+<head>
+    <style>
+        #revealButton {
+            display: none;
+        }
+        #hideButton {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    {{Basic meanings of word}}
+    <br>
+    <br>
+    {{type:Word with article}}
+    
+    <hr id=answer>
+    
+    <br>
+    <br>
+    {{Audio}}
+    
+    <br><br>
+    <div id="tags-container"></div>
+    
+    <br>
+    <div id="examples-div"></div>
+    <button id="revealButton" onclick="reveal()">Show Examples</button>
+    <button id="hideButton" onclick="hide()">Hide Examples</button>
+    
+    <script>
+        var transcript = document.getElementById("tags").innerHTML;
+    
+        if (transcript.indexOf("adj")>-1){
+            document.getElementById("aa").style.display = "";
+        }
+    
+        var exampleswContent = "{{Example sentences}}";
+        var exampleswoContent = "{{Example sentences without translation}}";
+    
+        if ((exampleswContent.trim() !== "") || (exampleswoContent.trim() !== "")){
+            revealButton.style.display = "inline";
+        }
+    
+        // tag displaying
+        var colors = [
+            "#f44336", "#9C27B0", "#3F51B5", "#03A9F4", "#009688",
+            "#C0CA33", "#FF9800", "#FF5722", "#9E9E9E", "#607D8B", 
+            "#FA7202", "#8A9A5B", '#86C6D3', '#674EA7'
+        ];
+    
+        var tagContent = "{{Tags}}";
+        if (tagContent.search(" ") >= 1) {
+            var tags = tagContent.split(" ");
+        } else {
+            var tags = [tagContent];
+        }
+    
+        for (var i in tags) {
+            var newDiv = document.createElement("div");
+            newDiv.id = "tag";
+            newDiv.innerHTML = tags[i];
+            newDiv.style.display = "inline-block";
+    
+            if (tags[i] == "leech"){
+                newDiv.style.backgroundColor = colors[10]; 
+                newDiv.style.border = "1px solid" + colors[10];
+                document.getElementById("tags-container").appendChild(newDiv);
+            
+            } else {
+                continue;
+            }
+        }
+    
+        function reveal() {
+            if (exampleswContent && exampleswContent){
+                var examples = exampleswoContent + "<br>" + exampleswContent;
+            } else if (exampleswContent){
+                var examples = exampleswContent;
+            } else if (exampleswoContent){
+                var examples = exampleswoContent;
+            } else {
+                var examples = "";
+            }
+            document.getElementById("examples-div").innerHTML = examples
+            revealButton.style.display = "none";
+            hideButton.style.display = "inline";
+        }
+        function hide() {
+            document.getElementById("examples-div").innerHTML = ""
+            hideButton.style.display = "none";
+            revealButton.style.display = "inline";
+        }
+    </script>
+</body>
