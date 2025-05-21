@@ -6,7 +6,8 @@ TODO:
  - allow for an entrypoint that takes in a CSV and generates the dictionary
    reponses
  - add a reset method that clears the csv data (run after importing to anki)
- - switch text counter to JSON
+ - switch audio counter to JSON
+ - re-direct audio files to the collection path
    
 COMMANDS:
  - found in system settings > keyboards > shortcuts > services > general
