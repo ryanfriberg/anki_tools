@@ -1,18 +1,29 @@
 # from anki.notes import Note
 import anki.collection as collection
-import re
-import pandas as pd
+import logging
 
-def post_process(col_path: str, deck_name: str):
+from anki_tools.enums.anki_enums import AnkiEnum
+
+
+_logger = logging.getLogger(__name__)
+_logger.addHandler(logging.NullHandler())
+
+
+def find_partials(deck_name: str, col_path: str = AnkiEnum.COL_PATH, debug: bool = False):
     col = collection.Collection(col_path) 
 
+    _logger.info("Searching deck [" + deck_name + "]...")
     deck = col.decks.by_name(deck_name)
+    
+    if (deck is None):
+        _logger.error("Deck not found.")
+        col.close()
+
     note_ids = col.find_notes(f'deck:"{deck["name"]}"')
 
     partials = set()
     for nid in note_ids:
         note = col.get_note(nid)
-        
         card_ids = note.card_ids()
         states = []
         for cid in card_ids:
@@ -21,17 +32,10 @@ def post_process(col_path: str, deck_name: str):
         if (0 in states) and (not all(state == 0 for state in states)):
             partials.add(note)
             note.add_tag("partially_learned")
-            col.update_note(note)
+            
+            if (not debug):
+                col.update_note(note)
 
-    print("# paritally learned:", len(partials))
-    for n in partials:
-        if ("Vocab" in n.keys()):
-            print(n["Vocab"])
-        elif("Front" in n.keys()):
-            print(n["Front"])
+    _logger.info("# paritally learned: " + str(len(partials)))
 
     col.close()
-
-
-post_process(col_path="/Users/ryanfriberg/Library/Application Support/Anki2/Ryan/collection.anki2",
-             deck_name="korean")

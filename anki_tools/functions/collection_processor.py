@@ -1,6 +1,8 @@
 import anki.collection as collection
 import logging
 
+# general functionality for proccessing anki decks. Maybe uses a function 
+# pointer or something
 
 class CollectionProcessor:
     def __init__(col_path: str):

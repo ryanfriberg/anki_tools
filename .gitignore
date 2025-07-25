@@ -1,5 +1,6 @@
 .vscode/
 
+
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -24,6 +25,8 @@ Makefile.local
 /tmp/
 log/
 *.log
+*.egg-info
+__pycache__/
 
 .env
 config.ini

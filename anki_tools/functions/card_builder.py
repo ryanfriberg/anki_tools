@@ -1,4 +1,11 @@
+from copy import deepcopy
+from CoreServices import DictionaryServices
+
 import logging
+import re
+import subprocess
+import sys
+
 
 '''
 TODO:
@@ -18,5 +25,5 @@ Dictionary_Automation -> control + shift + M
 '''
 
 class CardBuilder:
-    def __init__():
+    def __init__(self):
         pass

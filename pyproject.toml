@@ -12,4 +12,7 @@ authors = [
 dependencies = []
 
 [project.scripts]
-anki_replace = "anki_tools.entrypoints.replace:main"
+anki_find_partials = "anki_tools.entrypoints.partial_learn:main"
+
+[tool.setuptools]
+packages = ["anki_tools"]
